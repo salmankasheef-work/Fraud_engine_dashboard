@@ -69,13 +69,27 @@ body{font-family:var(--font-body);background:#f0f8f5;color:#0a2420;display:flex;
 .page.active{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
 
-/* ── RIGHT-PANEL TABS (Fraud Monitoring) ── */
-.fraud-monitor-wrap{display:flex;gap:14px;height:100%;}
-.fm-tabs{display:flex;flex-direction:column;gap:3px;min-width:130px;padding-top:4px;}
-.fm-tab{padding:8px 12px;border-radius:6px;cursor:pointer;font-size:11.5px;font-weight:500;color:var(--text-secondary);background:var(--bg-surface);border:1px solid var(--border);transition:all .15s;white-space:nowrap;}
-.fm-tab:hover{background:var(--bg-hover);}
-.fm-tab.active{background:var(--brand-teal);color:#fff;border-color:var(--brand-teal);}
-.fm-content{flex:1;overflow:hidden;}
+/* ── FRAUD MONITORING VERTICAL TABS ── */
+.fraud-monitor-wrap{display:flex;gap:16px;align-items:flex-start;}
+.fm-tabs{display:flex;flex-direction:column;gap:4px;min-width:148px;padding-top:0;flex-shrink:0;}
+.fm-tab{
+  display:flex;align-items:center;gap:9px;
+  padding:10px 14px;border-radius:8px;cursor:pointer;
+  font-size:12.5px;font-weight:500;
+  color:var(--text-secondary);
+  background:#fff;border:1px solid var(--border);
+  transition:all .15s;white-space:nowrap;
+  box-shadow:0 1px 3px rgba(0,0,0,.04);
+}
+.fm-tab:hover{background:var(--bg-hover);border-color:var(--brand-teal);color:var(--brand-teal);}
+.fm-tab.active{
+  background:var(--brand-teal);color:#fff;
+  border-color:var(--brand-teal);
+  font-weight:600;
+  box-shadow:0 4px 12px rgba(0,135,113,.25);
+}
+.fm-tab .fm-tab-icon{font-size:14px;width:18px;text-align:center;flex-shrink:0;}
+.fm-content{flex:1;overflow:hidden;min-width:0;}
 .fm-panel{display:none;}
 .fm-panel.active{display:block;}
 
@@ -254,12 +268,13 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
 #toast{position:fixed;bottom:22px;right:22px;z-index:600;background:#fff;border:1px solid var(--border);border-radius:8px;padding:11px 16px;font-size:12px;font-weight:500;box-shadow:0 8px 28px rgba(0,0,0,.14);transform:translateY(20px);opacity:0;transition:all .25s;display:flex;align-items:center;gap:8px;min-width:240px;}
 
 /* ── LOGIN ── */
-.login-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#041510 0%,#092e22 100%);z-index:900;display:flex;align-items:center;justify-content:center;}
-.login-card{background:#fff;border-radius:12px;padding:36px 32px;width:380px;box-shadow:0 24px 70px rgba(0,0,0,.3);}
-.login-logo{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
-.login-logo-mark{width:36px;height:36px;background:linear-gradient(135deg,#008771,#c8c200);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:15px;font-weight:700;color:#fff;}
-.login-logo-brand{font-family:'Space Mono',monospace;font-size:14px;font-weight:700;color:#0a2420;letter-spacing:.04em;}
-.login-logo-sub{font-size:10px;color:#5e9b90;letter-spacing:.06em;text-transform:uppercase;}
+.login-overlay{position:fixed;inset:0;background:linear-gradient(145deg,#031a12 0%,#052e1e 50%,#041a10 100%);z-index:900;display:flex;align-items:center;justify-content:center;}
+.login-card{background:#fff;border-radius:14px;padding:40px 36px 32px;width:400px;box-shadow:0 32px 80px rgba(0,0,0,.45);}
+.login-logo-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:28px;}
+.login-sfx-img{width:72px;height:72px;border-radius:14px;object-fit:cover;margin-bottom:12px;box-shadow:0 4px 18px rgba(0,135,113,.25);}
+.login-logo-brand{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:#0a2420;letter-spacing:.04em;}
+.login-logo-sub{font-size:11px;color:#5e9b90;letter-spacing:.06em;text-transform:uppercase;margin-top:2px;}
+.login-divider{width:100%;height:1px;background:var(--border-light);margin:0 0 22px;}
 </style>
 </head>
 <body>
@@ -276,33 +291,43 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
 <!-- ══ LOGIN ══ -->
 <div class="login-overlay" id="loginOverlay">
   <div class="login-card">
-    <div class="login-logo">
-      <div class="login-logo-mark">SF</div>
-      <div>
-        <div class="login-logo-brand">SHADOWFAX</div>
-        <div class="login-logo-sub">Fraud Engine · Trust &amp; Safety</div>
-      </div>
+    <!-- Logo centered with Shadowfax icon image -->
+    <div class="login-logo-wrap">
+      <img class="login-sfx-img" src="data:image/png;base64,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" alt="Shadowfax" onerror="this.style.display='none'">
+      <div class="login-logo-brand">SHADOWFAX</div>
+      <div class="login-logo-sub">Fraud Engine · Trust &amp; Safety</div>
     </div>
-    <div style="font-family:var(--font-mono);font-size:16px;font-weight:700;color:#0a2420;margin-bottom:4px;">Sign In</div>
-    <div style="font-size:12px;color:#5e9b90;margin-bottom:20px;">Access restricted to authorised Shadowfax personnel.</div>
+    <div class="login-divider"></div>
+    <div style="font-family:var(--font-mono);font-size:15px;font-weight:700;color:#0a2420;margin-bottom:18px;text-align:center;">Sign In to Dashboard</div>
     <div class="form-group">
       <label class="form-label">Email Address</label>
-      <input id="loginEmail" type="email" class="form-control" placeholder="yourname@shadowfax.in" onkeydown="if(event.key==='Enter')document.getElementById('loginPass').focus()">
+      <input id="loginEmail" type="email" class="form-control" placeholder="yourname@shadowfax.in"
+        onfocus="this.style.borderColor='#008771'" onblur="this.style.borderColor=''"
+        onkeydown="if(event.key==='Enter')document.getElementById('loginPass').focus()">
     </div>
     <div class="form-group">
       <label class="form-label">Password</label>
-      <input id="loginPass" type="password" class="form-control" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+      <input id="loginPass" type="password" class="form-control" placeholder="Enter your password"
+        onfocus="this.style.borderColor='#008771'" onblur="this.style.borderColor=''"
+        onkeydown="if(event.key==='Enter')doLogin()">
     </div>
-    <div id="loginError" style="display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:8px 12px;font-size:11px;color:#991b1b;margin-bottom:12px;"></div>
-    <button onclick="doLogin()" class="btn btn-primary" style="width:100%;padding:10px;font-size:13px;justify-content:center;margin-bottom:10px;">Sign In to Dashboard</button>
-    <p style="font-size:10px;color:#5e9b90;text-align:center;">Only <strong style="color:#008771;">@shadowfax.in</strong> accounts are permitted.</p>
+    <div id="loginError" style="display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:9px 12px;font-size:11.5px;color:#991b1b;margin-bottom:14px;line-height:1.5;"></div>
+    <button id="loginBtn" onclick="doLogin()" class="btn btn-primary"
+      style="width:100%;padding:11px;font-size:13px;justify-content:center;margin-bottom:14px;
+             box-shadow:0 4px 14px rgba(0,135,113,.3);letter-spacing:.03em;">
+      Sign In
+    </button>
+    <p style="font-size:11px;color:#5e9b90;text-align:center;line-height:1.6;">
+      Only <strong style="color:#008771;">@shadowfax.in</strong> email accounts are permitted.
+    </p>
   </div>
 </div>
 
 <!-- ══ SIDEBAR ══ -->
 <div class="sidebar">
   <div class="sidebar-logo">
-    <div class="logo-mark">SF</div>
+    <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/wAARCAAeAB4DASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAAAAYFBAcI/8QAJRAAAgICAgIBBQEAAAAAAAAAAQIDBAUREiETMUFRYXH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A7bAAAAAAN5SjCLlJpJe2wFHqHUbdL4p32XTrhXFSe5SSSbS/3kqnkVXVRtrnGUJraafdM+eqHXbLFOvh9k7HGUnKEJbrb+vaTOD0fmNmpasruWuMqoyp8iN06pv2kkkn8Xt/QBvAAAAA8LKKL4ONtcJxfumkytytJWVTlZiZzitya3TYn+k+wAAAD/9k=" 
+      alt="SF" style="width:30px;height:30px;border-radius:6px;object-fit:cover;flex-shrink:0;">
     <div>
       <div class="logo-brand">SHADOWFAX</div>
       <div class="logo-sub">Fraud Engine</div>
@@ -388,14 +413,14 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
     <!-- ══ FRAUD MONITORING (right-side tabs) ══ -->
     <div class="page" id="page-fraud-monitoring">
       <div class="fraud-monitor-wrap">
-        <!-- Left tab list -->
+        <!-- Left tab list - vertical -->
         <div class="fm-tabs" id="fm-tab-list">
-          <div class="fm-tab active" onclick="switchFM('bulk_cod',this)">₹ Bulk COD</div>
-          <div class="fm-tab" onclick="switchFM('fraud_eng',this)">⚡ Fraud Engine</div>
-          <div class="fm-tab" onclick="switchFM('xray',this)">🔬 X Ray Fraud</div>
-          <div class="fm-tab" onclick="switchFM('qc',this)">✔ QC Fraud</div>
-          <div class="fm-tab" onclick="switchFM('rtod',this)">↩ RTOD Fraud</div>
-          <div class="fm-tab" onclick="switchFM('dbnu',this)">📋 DBNU</div>
+          <div class="fm-tab active" onclick="switchFM('bulk_cod',this)"><span class="fm-tab-icon">₹</span> Bulk COD</div>
+          <div class="fm-tab" onclick="switchFM('fraud_eng',this)"><span class="fm-tab-icon">⚡</span> Fraud Engine</div>
+          <div class="fm-tab" onclick="switchFM('xray',this)"><span class="fm-tab-icon">🔬</span> X Ray Fraud</div>
+          <div class="fm-tab" onclick="switchFM('qc',this)"><span class="fm-tab-icon">✔</span> QC Fraud</div>
+          <div class="fm-tab" onclick="switchFM('rtod',this)"><span class="fm-tab-icon">↩</span> RTOD Fraud</div>
+          <div class="fm-tab" onclick="switchFM('dbnu',this)"><span class="fm-tab-icon">📋</span> DBNU</div>
         </div>
 
         <!-- Right panel content -->
@@ -418,21 +443,125 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <select class="filter-select" id="fm-hub-f-bulk_cod" onchange="fmFilter('bulk_cod')"><option value="">All Hubs</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
-              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'bulk_cod')"></th><th>AWB No.</th><th>Date</th><th>Customer</th><th>Mobile</th><th>Hub</th><th>Client</th><th>COD (₹)</th><th>Fraud Score</th><th>Risk</th><th>Flags</th><th>Remark</th><th>Status</th><th>Action</th></tr></thead><tbody id="fm-table-bulk_cod"></tbody></table></div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'bulk_cod')"></th><th>AWB Number</th><th>Category</th><th>Loss Type</th><th>SFX Status</th><th>Product Value</th><th>Product Description</th><th>Hub</th><th>City</th><th>State</th><th>Cx as Rider / Rider ID</th><th>Last Attempt LM Rider ID</th><th>Customer Name</th><th>Zone</th><th>POC Email</th><th>Action</th></tr></thead><tbody id="fm-table-bulk_cod"></tbody></table></div>
               <div class="pgn" id="fm-pgn-bulk_cod"></div>
             </div>
           </div>
 
-          <!-- Panels for other modules (identical structure, different IDs) -->
-          <script>
-          (function(){
-            var modules=['fraud_eng','xray','qc','rtod','dbnu'];
-            var labels={'fraud_eng':'Fraud Engine','xray':'X Ray Fraud','qc':'QC Fraud','rtod':'RTOD Fraud','dbnu':'DBNU'};
-            modules.forEach(function(m){
-              document.getElementById('fm-panel-'+m)||document.write('');
-            });
-          })();
-          </script>
+          <!-- fraud_eng panel -->
+          <div class="fm-panel" id="fm-panel-fraud_eng">
+            <div class="kpi-grid" id="fm-kpi-fraud_eng"></div>
+            <div class="two-col">
+              <div class="card"><div class="card-header"><span class="card-title">Daily Trend</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-trend-fraud_eng"></canvas></div></div></div>
+              <div class="card"><div class="card-header"><span class="card-title">Risk Distribution</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-risk-fraud_eng"></canvas></div></div></div>
+            </div>
+            <div class="two-col">
+              <div class="card"><div class="card-header"><span class="card-title">Top Hubs</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-hub-fraud_eng"></canvas></div></div></div>
+              <div class="card"><div class="card-header"><span class="card-title">Top Fraud Flags</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-flag-fraud_eng"></canvas></div></div></div>
+            </div>
+            <div class="card">
+              <div class="filters-bar">
+                <input class="search-input" type="text" placeholder="Search AWB, customer…" id="fm-search-fraud_eng" oninput="fmSearch('fraud_eng',this.value)">
+                <select class="filter-select" id="fm-risk-f-fraud_eng" onchange="fmFilter('fraud_eng')"><option value="">All Risk</option><option>High</option><option>Medium</option><option>Low</option></select>
+                <select class="filter-select" id="fm-hub-f-fraud_eng" onchange="fmFilter('fraud_eng')"><option value="">All Hubs</option></select>
+                <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
+              </div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'fraud_eng')"></th><th>AWB Number</th><th>Category</th><th>Loss Type</th><th>SFX Status</th><th>Product Value</th><th>Product Description</th><th>Hub</th><th>City</th><th>State</th><th>Cx as Rider / Rider ID</th><th>Last Attempt LM Rider ID</th><th>Customer Name</th><th>Zone</th><th>POC Email</th><th>Action</th></tr></thead><tbody id="fm-table-fraud_eng"></tbody></table></div>
+              <div class="pgn" id="fm-pgn-fraud_eng"></div>
+            </div>
+          </div>
+
+          <!-- xray panel -->
+          <div class="fm-panel" id="fm-panel-xray">
+            <div class="kpi-grid" id="fm-kpi-xray"></div>
+            <div class="two-col">
+              <div class="card"><div class="card-header"><span class="card-title">Daily Trend</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-trend-xray"></canvas></div></div></div>
+              <div class="card"><div class="card-header"><span class="card-title">Risk Distribution</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-risk-xray"></canvas></div></div></div>
+            </div>
+            <div class="two-col">
+              <div class="card"><div class="card-header"><span class="card-title">Top Hubs</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-hub-xray"></canvas></div></div></div>
+              <div class="card"><div class="card-header"><span class="card-title">Top Fraud Flags</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-flag-xray"></canvas></div></div></div>
+            </div>
+            <div class="card">
+              <div class="filters-bar">
+                <input class="search-input" type="text" placeholder="Search AWB, customer…" id="fm-search-xray" oninput="fmSearch('xray',this.value)">
+                <select class="filter-select" id="fm-risk-f-xray" onchange="fmFilter('xray')"><option value="">All Risk</option><option>High</option><option>Medium</option><option>Low</option></select>
+                <select class="filter-select" id="fm-hub-f-xray" onchange="fmFilter('xray')"><option value="">All Hubs</option></select>
+                <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
+              </div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'xray')"></th><th>AWB Number</th><th>Category</th><th>Loss Type</th><th>SFX Status</th><th>Product Value</th><th>Product Description</th><th>Hub</th><th>City</th><th>State</th><th>Cx as Rider / Rider ID</th><th>Last Attempt LM Rider ID</th><th>Customer Name</th><th>Zone</th><th>POC Email</th><th>Action</th></tr></thead><tbody id="fm-table-xray"></tbody></table></div>
+              <div class="pgn" id="fm-pgn-xray"></div>
+            </div>
+          </div>
+
+          <!-- qc panel -->
+          <div class="fm-panel" id="fm-panel-qc">
+            <div class="kpi-grid" id="fm-kpi-qc"></div>
+            <div class="two-col">
+              <div class="card"><div class="card-header"><span class="card-title">Daily Trend</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-trend-qc"></canvas></div></div></div>
+              <div class="card"><div class="card-header"><span class="card-title">Risk Distribution</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-risk-qc"></canvas></div></div></div>
+            </div>
+            <div class="two-col">
+              <div class="card"><div class="card-header"><span class="card-title">Top Hubs</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-hub-qc"></canvas></div></div></div>
+              <div class="card"><div class="card-header"><span class="card-title">Top Fraud Flags</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-flag-qc"></canvas></div></div></div>
+            </div>
+            <div class="card">
+              <div class="filters-bar">
+                <input class="search-input" type="text" placeholder="Search AWB, customer…" id="fm-search-qc" oninput="fmSearch('qc',this.value)">
+                <select class="filter-select" id="fm-risk-f-qc" onchange="fmFilter('qc')"><option value="">All Risk</option><option>High</option><option>Medium</option><option>Low</option></select>
+                <select class="filter-select" id="fm-hub-f-qc" onchange="fmFilter('qc')"><option value="">All Hubs</option></select>
+                <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
+              </div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'qc')"></th><th>AWB Number</th><th>Category</th><th>Loss Type</th><th>SFX Status</th><th>Product Value</th><th>Product Description</th><th>Hub</th><th>City</th><th>State</th><th>Cx as Rider / Rider ID</th><th>Last Attempt LM Rider ID</th><th>Customer Name</th><th>Zone</th><th>POC Email</th><th>Action</th></tr></thead><tbody id="fm-table-qc"></tbody></table></div>
+              <div class="pgn" id="fm-pgn-qc"></div>
+            </div>
+          </div>
+
+          <!-- rtod panel -->
+          <div class="fm-panel" id="fm-panel-rtod">
+            <div class="kpi-grid" id="fm-kpi-rtod"></div>
+            <div class="two-col">
+              <div class="card"><div class="card-header"><span class="card-title">Daily Trend</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-trend-rtod"></canvas></div></div></div>
+              <div class="card"><div class="card-header"><span class="card-title">Risk Distribution</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-risk-rtod"></canvas></div></div></div>
+            </div>
+            <div class="two-col">
+              <div class="card"><div class="card-header"><span class="card-title">Top Hubs</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-hub-rtod"></canvas></div></div></div>
+              <div class="card"><div class="card-header"><span class="card-title">Top Fraud Flags</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-flag-rtod"></canvas></div></div></div>
+            </div>
+            <div class="card">
+              <div class="filters-bar">
+                <input class="search-input" type="text" placeholder="Search AWB, customer…" id="fm-search-rtod" oninput="fmSearch('rtod',this.value)">
+                <select class="filter-select" id="fm-risk-f-rtod" onchange="fmFilter('rtod')"><option value="">All Risk</option><option>High</option><option>Medium</option><option>Low</option></select>
+                <select class="filter-select" id="fm-hub-f-rtod" onchange="fmFilter('rtod')"><option value="">All Hubs</option></select>
+                <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
+              </div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'rtod')"></th><th>AWB Number</th><th>Category</th><th>Loss Type</th><th>SFX Status</th><th>Product Value</th><th>Product Description</th><th>Hub</th><th>City</th><th>State</th><th>Cx as Rider / Rider ID</th><th>Last Attempt LM Rider ID</th><th>Customer Name</th><th>Zone</th><th>POC Email</th><th>Action</th></tr></thead><tbody id="fm-table-rtod"></tbody></table></div>
+              <div class="pgn" id="fm-pgn-rtod"></div>
+            </div>
+          </div>
+
+          <!-- dbnu panel -->
+          <div class="fm-panel" id="fm-panel-dbnu">
+            <div class="kpi-grid" id="fm-kpi-dbnu"></div>
+            <div class="two-col">
+              <div class="card"><div class="card-header"><span class="card-title">Daily Trend</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-trend-dbnu"></canvas></div></div></div>
+              <div class="card"><div class="card-header"><span class="card-title">Risk Distribution</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-risk-dbnu"></canvas></div></div></div>
+            </div>
+            <div class="two-col">
+              <div class="card"><div class="card-header"><span class="card-title">Top Hubs</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-hub-dbnu"></canvas></div></div></div>
+              <div class="card"><div class="card-header"><span class="card-title">Top Fraud Flags</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-flag-dbnu"></canvas></div></div></div>
+            </div>
+            <div class="card">
+              <div class="filters-bar">
+                <input class="search-input" type="text" placeholder="Search AWB, customer…" id="fm-search-dbnu" oninput="fmSearch('dbnu',this.value)">
+                <select class="filter-select" id="fm-risk-f-dbnu" onchange="fmFilter('dbnu')"><option value="">All Risk</option><option>High</option><option>Medium</option><option>Low</option></select>
+                <select class="filter-select" id="fm-hub-f-dbnu" onchange="fmFilter('dbnu')"><option value="">All Hubs</option></select>
+                <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
+              </div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'dbnu')"></th><th>AWB Number</th><th>Category</th><th>Loss Type</th><th>SFX Status</th><th>Product Value</th><th>Product Description</th><th>Hub</th><th>City</th><th>State</th><th>Cx as Rider / Rider ID</th><th>Last Attempt LM Rider ID</th><th>Customer Name</th><th>Zone</th><th>POC Email</th><th>Action</th></tr></thead><tbody id="fm-table-dbnu"></tbody></table></div>
+              <div class="pgn" id="fm-pgn-dbnu"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -891,22 +1020,48 @@ function doLogin() {
   var email = document.getElementById('loginEmail').value.trim().toLowerCase();
   var pass  = document.getElementById('loginPass').value.trim();
   var err   = document.getElementById('loginError');
+  var btn   = document.getElementById('loginBtn');
   err.style.display = 'none';
-  if (!email || !pass) { err.style.display='block'; err.textContent='Please enter email and password.'; return; }
 
-  if (API === 'https://script.google.com/macros/s/AKfycbwcc1qhLhWPWWuYzdH3xpx1VOQ9X_R04hRYcLg2rS-2MyRF2G1R5r5wvldVYHAW3bRd/exec') {
-    // Demo mode: allow any @shadowfax.in
-    if (!email.endsWith('@shadowfax.in')) { err.style.display='block'; err.textContent='Only @shadowfax.in emails are allowed.'; return; }
-    loginSuccess(email, 'Demo User', 'ops');
+  if (!email || !pass) {
+    err.style.display = 'block';
+    err.innerHTML = '⚠ Please enter your email and password.';
+    return;
+  }
+  if (!email.endsWith('@shadowfax.in')) {
+    err.style.display = 'block';
+    err.innerHTML = '✕ Only <strong>@shadowfax.in</strong> accounts are permitted.';
+    document.getElementById('loginEmail').style.borderColor = '#fca5a5';
     return;
   }
 
-  showLoader('Verifying credentials…');
+  if (API === 'https://script.google.com/macros/s/AKfycbwcc1qhLhWPWWuYzdH3xpx1VOQ9X_R04hRYcLg2rS-2MyRF2G1R5r5wvldVYHAW3bRd/exec') {
+    err.style.display = 'block';
+    err.innerHTML = '⚠ API URL not configured. Set <strong>var API</strong> in the script to your Apps Script Web App URL.';
+    return;
+  }
+
+  // Disable button while verifying
+  btn.disabled = true;
+  btn.textContent = 'Verifying…';
+
   apiPost({action:'login', email:email, password:pass}).then(function(d){
-    hideLoader();
-    if (d.status !== 'success') { err.style.display='block'; err.textContent=d.message||'Invalid credentials.'; return; }
+    btn.disabled = false;
+    btn.textContent = 'Sign In to Dashboard';
+    if (d.status !== 'success') {
+      err.style.display = 'block';
+      err.innerHTML = '✕ ' + (d.message || 'Invalid email or password. Please try again.');
+      document.getElementById('loginPass').value = '';
+      document.getElementById('loginPass').focus();
+      return;
+    }
     loginSuccess(d.email, d.name, d.role);
-  }).catch(function(e){ hideLoader(); err.style.display='block'; err.textContent='Network error. Try again.'; });
+  }).catch(function(e){
+    btn.disabled = false;
+    btn.textContent = 'Sign In to Dashboard';
+    err.style.display = 'block';
+    err.innerHTML = '⚠ Network error. Please check your connection and try again.';
+  });
 }
 
 function loginSuccess(email, name, role) {
@@ -946,7 +1101,7 @@ function showPage(page) {
   var t = PAGE_TITLES[page]||[page.toUpperCase(),''];
   document.getElementById('topbar-title').textContent = t[0];
   document.getElementById('topbar-sub').textContent   = t[1];
-  if (page==='fraud-monitoring') { buildFMPanels(); switchFM(G.activeFM, document.querySelector('.fm-tab.active')||document.querySelector('.fm-tab')); }
+  if (page==='fraud-monitoring') { switchFM(G.activeFM, document.querySelector('.fm-tab.active')||document.querySelector('.fm-tab')); }
   if (page==='databases') loadAllDb();
   if (page==='actions')   loadActions();
   if (page==='investigations') { loadFpiData(); }
@@ -1001,41 +1156,6 @@ function renderExecutive(d) {
   mkBarH('an-hub-chart', ex.topHubs.labels, ex.topHubs.data, '#008771');
 }
 
-// ════════════════════════════════════════
-// FRAUD MONITORING — BUILD PANELS
-// ════════════════════════════════════════
-function buildFMPanels() {
-  // Build panels for modules other than bulk_cod (already in HTML)
-  var wrap = document.querySelector('.fm-content');
-  FM_MODULES.forEach(function(m) {
-    if (m==='bulk_cod') return;
-    if (document.getElementById('fm-panel-'+m)) return;
-    var div = document.createElement('div');
-    div.className = 'fm-panel';
-    div.id = 'fm-panel-'+m;
-    div.innerHTML = `
-      <div class="kpi-grid" id="fm-kpi-${m}"></div>
-      <div class="two-col">
-        <div class="card"><div class="card-header"><span class="card-title">Daily Trend</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-trend-${m}"></canvas></div></div></div>
-        <div class="card"><div class="card-header"><span class="card-title">Risk Distribution</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-risk-${m}"></canvas></div></div></div>
-      </div>
-      <div class="two-col">
-        <div class="card"><div class="card-header"><span class="card-title">Top Hubs</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-hub-${m}"></canvas></div></div></div>
-        <div class="card"><div class="card-header"><span class="card-title">Top Fraud Flags</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-flag-${m}"></canvas></div></div></div>
-      </div>
-      <div class="card">
-        <div class="filters-bar">
-          <input class="search-input" type="text" placeholder="Search AWB, customer…" id="fm-search-${m}" oninput="fmSearch('${m}',this.value)">
-          <select class="filter-select" id="fm-risk-f-${m}" onchange="fmFilter('${m}')"><option value="">All Risk</option><option>High</option><option>Medium</option><option>Low</option></select>
-          <select class="filter-select" id="fm-hub-f-${m}" onchange="fmFilter('${m}')"><option value="">All Hubs</option></select>
-          <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
-        </div>
-        <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'${m}')"></th><th>AWB No.</th><th>Date</th><th>Customer</th><th>Mobile</th><th>Hub</th><th>Client</th><th>COD (₹)</th><th>Fraud Score</th><th>Risk</th><th>Flags</th><th>Remark</th><th>Status</th><th>Action</th></tr></thead><tbody id="fm-table-${m}"></tbody></table></div>
-        <div class="pgn" id="fm-pgn-${m}"></div>
-      </div>`;
-    wrap.appendChild(div);
-  });
-}
 
 function switchFM(key, tabEl) {
   G.activeFM = key;
@@ -1097,23 +1217,25 @@ function loadFMTable(key, page, search) {
 
 function renderFMTable(key, rows) {
   var tb = document.getElementById('fm-table-'+key); if(!tb) return;
-  if(!rows||!rows.length){ tb.innerHTML='<tr><td colspan="14" style="text-align:center;padding:24px;color:var(--text-muted)">No records. Upload data to see results.</td></tr>'; return; }
+  if(!rows||!rows.length){ tb.innerHTML='<tr><td colspan="16" style="text-align:center;padding:24px;color:var(--text-muted)">No records. Upload data to see results here.</td></tr>'; return; }
   tb.innerHTML = rows.map(function(r){
-    var sc = parseInt(r.fraud_score||0), rc = sc>=70?'high':sc>=40?'medium':'low';
-    return '<tr><td><input type="checkbox" onclick="event.stopPropagation()"></td>'
-      +'<td class="td-mono" style="color:var(--brand-teal)">'+esc(r.awb_number)+'</td>'
-      +'<td class="td-muted">'+esc(r.upload_date?r.upload_date.slice(0,10):'—')+'</td>'
-      +'<td>'+esc(r.customer_name)+'</td>'
-      +'<td class="td-mono">'+esc(r.mobile)+'</td>'
-      +'<td>'+esc(r.hub)+'</td>'
-      +'<td>'+esc(r.client)+'</td>'
-      +'<td class="td-mono">'+esc(r.cod_amount?'₹'+Number(r.cod_amount).toLocaleString('en-IN'):'—')+'</td>'
-      +'<td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill '+rc+'" style="width:'+sc+'%"></div></div><span class="score-val" style="color:var(--risk-'+rc+')">'+sc+'</span></div></td>'
-      +'<td><span class="risk-badge '+rc+'">'+rc.charAt(0).toUpperCase()+rc.slice(1)+'</span></td>'
-      +'<td>'+esc(r.fraud_flags).split(',').map(function(f){ return f.trim()&&('<span class="tag">'+esc(f.trim())+'</span>');}).join('')+'</td>'
-      +'<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis" title="'+esc(r.remark)+'">'+esc(r.remark||'—')+'</td>'
-      +'<td><span class="status-chip '+(r.status==='Open'?'status-open':r.status==='Closed'?'status-closed':'status-pending')+'">'+esc(r.status||'—')+'</span></td>'
-      +'<td><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openActionModal(\''+esc(r.awb_number||'')+'\')">⚡ Act</button></td>'
+    return '<tr>'
+      +'<td><input type="checkbox" onclick="event.stopPropagation()"></td>'
+      +'<td class="td-mono" style="color:var(--brand-teal)">'+esc(r.AWB_Numbers||r.awb_number||'—')+'</td>'
+      +'<td><span class="tag">'+esc(r.Category||'—')+'</span></td>'
+      +'<td><span class="tag">'+esc(r.Loss_Type||'—')+'</span></td>'
+      +'<td><span class="status-chip '+(r.SFX_Status==='Delivered'?'status-closed':r.SFX_Status==='RTO'?'status-escalated':'status-pending')+'">'+esc(r.SFX_Status||'—')+'</span></td>'
+      +'<td class="td-mono">'+esc(r.Product_Value?'₹'+Number(r.Product_Value).toLocaleString('en-IN'):'—')+'</td>'
+      +'<td style="max-width:130px;overflow:hidden;text-overflow:ellipsis" title="'+esc(r.Product_Description||'')+'">'+esc(r.Product_Description||'—')+'</td>'
+      +'<td style="font-weight:600">'+esc(r.Hub||r.hub||'—')+'</td>'
+      +'<td>'+esc(r.City||'—')+'</td>'
+      +'<td>'+esc(r.State||'—')+'</td>'
+      +'<td class="td-mono">'+esc(r['Cx_as_Rider-Rider_ID']||r.Cx_Rider_ID||'—')+'</td>'
+      +'<td class="td-mono">'+esc(r.Last_attempt_LM_Rider_id||r.LM_Rider_ID||'—')+'</td>'
+      +'<td>'+esc(r.Customer_name||r.CX_Name||'—')+'</td>'
+      +'<td>'+esc(r.Zone||'—')+'</td>'
+      +'<td style="font-size:11px">'+esc(r.POC_Email||'—')+'</td>'
+      +'<td><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openActionModal(\''+esc(r.AWB_Numbers||r.awb_number||'')+'\')">⚡ Act</button></td>'
       +'</tr>';
   }).join('');
 }
