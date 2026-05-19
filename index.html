@@ -1082,7 +1082,32 @@ function loginSuccess(email, name, role) {
   document.getElementById('sidebarAvatar').textContent  = initials;
   var ov = document.getElementById('loginOverlay');
   ov.style.transition='opacity .5s'; ov.style.opacity='0';
-  setTimeout(function(){ ov.remove(); loadDashboard(); }, 500);
+  // Auto-load ALL data on login — no manual refresh needed
+  setTimeout(function(){
+    ov.remove();
+    loadAllDataOnLogin();
+  }, 500);
+}
+
+function loadAllDataOnLogin(){
+  showLoader('Loading all data — please wait…');
+  apiGet({action:'getDashboard'}).then(function(d){
+    hideLoader();
+    if(!d||d.status==='error'){ showToast('Failed to load: '+(d&&d.message||'Check API URL'),'red'); return; }
+    G.dashData = d;
+    renderExecutive(d);
+    // Pre-render all FM module data
+    FM_MODULES.forEach(function(m){ if(d.modules[m]) loadFMData(m); });
+    // Pre-load databases and actions silently
+    loadAllDb();
+    loadActions();
+    loadFpiData();
+    var total = d.executive.totalCases||0;
+    document.getElementById('total-fraud-badge').textContent = total>999?'999+':total;
+    document.getElementById('pending-action-badge').textContent = d.executive.openActions||0;
+    document.getElementById('refreshLabel').textContent = 'Updated '+new Date().toLocaleTimeString('en-IN',{hour12:true});
+    showToast('Dashboard ready — all data loaded','green');
+  }).catch(function(e){ hideLoader(); showToast('Network error: '+e.message,'red'); });
 }
 
 function handleLogout() { location.reload(); }
@@ -1121,16 +1146,20 @@ function showPage(page) {
 // DASHBOARD LOAD
 // ════════════════════════════════════════
 function loadDashboard() {
-  showLoader('Loading data from Google Sheets…');
+  showLoader('Refreshing data from Google Sheets…');
   apiGet({action:'getDashboard'}).then(function(d){
     hideLoader();
     if (!d||d.status==='error') { showToast('Failed to load: '+(d&&d.message||'Check API URL'),'red'); return; }
     G.dashData = d;
     renderExecutive(d);
+    // Refresh current active FM panel if fraud-monitoring is visible
+    if(document.getElementById('page-fraud-monitoring').classList.contains('active'))
+      loadFMData(G.activeFM);
     document.getElementById('refreshLabel').textContent = 'Updated '+new Date().toLocaleTimeString('en-IN',{hour12:true});
     var total = d.executive.totalCases||0;
     document.getElementById('total-fraud-badge').textContent = total>999?'999+':total;
     document.getElementById('pending-action-badge').textContent = d.executive.openActions||0;
+    showToast('Data refreshed','green');
   }).catch(function(e){ hideLoader(); showToast('Network error: '+e.message,'red'); });
 }
 
@@ -1192,9 +1221,12 @@ function loadFMData(key) {
         kcard2('Open Cases', mod.open, 'cyan', '#007a6a')
       ].join('');
     } else {
-      var pvFmt = mod.totalPV >= 100000
-        ? '₹' + (mod.totalPV/100000).toFixed(1) + 'L'
-        : '₹' + Number(mod.totalPV||0).toLocaleString('en-IN');
+      var rawPV = typeof mod.totalPV === 'number' && !isNaN(mod.totalPV) ? mod.totalPV : 0;
+      var pvFmt = rawPV >= 10000000
+        ? '₹' + (rawPV/10000000).toFixed(2) + 'Cr'
+        : rawPV >= 100000
+        ? '₹' + (rawPV/100000).toFixed(1) + 'L'
+        : '₹' + Number(rawPV).toLocaleString('en-IN');
       kpiEl.innerHTML = [
         kcard2('Total Cases', mod.count, 'blue', '#008771'),
         kcard2('Product Value', pvFmt, 'amber', '#8a8600'),
@@ -1268,7 +1300,7 @@ function renderFMTable(key, rows) {
         +'<td>'+esc(r.x_ray_location||r.X_Ray_Location||'—')+'</td>'
         +'<td>'+esc(r.client_name||r.Client_Name||r.client||'—')+'</td>'
         +'<td>'+esc(r.order_status||r.Order_Status||'—')+'</td>'
-        +'<td class="td-mono">'+esc(r.product_value?'₹'+r.product_value:'—')+'</td>'
+        +'<td class="td-mono">'+esc(parsePV(r.product_value)?'₹'+parsePV(r.product_value).toLocaleString('en-IN'):'—')+'</td>'
         +'<td style="font-weight:600">'+esc(getHub(r))+'</td>'
         +'<td class="td-mono">'+esc(r.rider_id||r.Rider_ID||'—')+'</td>'
         +'<td>'+esc(r.customer_name||r.Customer_Name||'—')+'</td>'
@@ -1276,7 +1308,7 @@ function renderFMTable(key, rows) {
         +'<td class="td-mono">'+esc(r.riderx_cx||r.Riderx_Cx||'—')+'</td>'
         +'<td class="td-mono">'+esc(r.sfx_rider_id||r.SFX_Rider_ID||'—')+'</td>'
         +'<td>'+esc(r.product_names||r.Product_Names||'—')+'</td>'
-        +'<td><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();actBtn(this)">⚡ Act</button></td>'
+        +'<td><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openHubModalFromBtn(this)">⚡</button></td>'
         +'</tr>';
     }).join('');
     return;
@@ -1300,22 +1332,22 @@ function renderFMTable(key, rows) {
     var riskL  = r.Risk_Level     || '';
     var riskClass = riskL.toLowerCase()==='high'?'risk-badge high':riskL.toLowerCase()==='medium'?'risk-badge medium':riskL.toLowerCase()==='low'?'risk-badge low':'';
     var stClass = status.toLowerCase()==='open'||status.toLowerCase()==='delivered'?'status-open':status.toLowerCase()==='closed'||status.toLowerCase()==='rto'?'status-closed':'status-pending';
-    return '<tr>'
+    return '<tr data-hub="'+esc(hub)+'" data-ut="'+key+'" onclick="openHubModal(this.dataset.hub,this.dataset.ut)" title="Click to view hub detail">'
       +'<td><input type="checkbox" onclick="event.stopPropagation()"></td>'
       +'<td class="td-mono" style="color:var(--brand-teal)">'+esc(awb)+'</td>'
       +'<td class="td-muted">'+esc(date?date.slice(0,10):'—')+'</td>'
       +'<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis" title="'+esc(prod)+'">'+esc(prod)+'</td>'
       +'<td><span class="tag">'+esc(cat)+'</span></td>'
-      +'<td class="td-mono">'+esc(pval?'₹'+pval:'—')+'</td>'
+      +'<td class="td-mono">'+esc(pval?'₹'+Number(String(pval).replace(/[^0-9.]/g,'')||0).toLocaleString('en-IN'):'—')+'</td>'
       +'<td>'+esc(pay)+'</td>'
       +'<td>'+esc(cxname)+'</td>'
-      +'<td style="font-weight:600">'+esc(hub)+'</td>'
+      +'<td style="font-weight:600;color:var(--brand-teal)">'+esc(hub)+'</td>'
       +'<td><span class="status-chip '+stClass+'">'+esc(status)+'</span></td>'
       +'<td>'+esc(client)+'</td>'
       +'<td class="td-mono">'+esc(rider)+'</td>'
       +'<td class="td-mono">'+esc(att)+'</td>'
       +(isFraudEng && riskL?'<td><span class="'+riskClass+'">'+esc(riskL)+'</span></td>':isFraudEng?'<td>—</td>':'')
-      +'<td><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();actBtn(this)">⚡</button></td>'
+      +'<td><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openHubModalFromBtn(this)">⚡</button></td>'
       +'</tr>';
   }).join('');
 }
@@ -1624,13 +1656,13 @@ function renderActionTable(rows) {
 
 
 function actBtn(btn){
-  // Extract AWB from the row's first mono cell
-  try {
-    var row = btn.closest('tr');
-    var awbCell = row ? row.querySelector('.td-mono') : null;
-    var awb = awbCell ? awbCell.textContent.trim() : '';
-    openActionModal(awb, '');
-  } catch(e){ openActionModal('',''); }
+  try{
+    var row=btn.closest('tr');
+    var hubCell=row?row.querySelector('td[style*="font-weight:600"]'):null;
+    var hub=hubCell?hubCell.textContent.trim():'';
+    if(hub) openHubModal(hub,G.activeFM||'fraud_eng');
+    else{var awbCell=row?row.querySelector('.td-mono'):null;openActionModal(awbCell?awbCell.textContent.trim():'','');}
+  }catch(e){openActionModal('','');}
 }
 function openActionModal(awb, type) {
   document.getElementById('act-awb').value  = awb||'';
@@ -1717,39 +1749,83 @@ function renderFpiQueue(data) {
 
 function loadFpiDashboard() {
   if(!G.fpiData) { loadFpiData(); return; }
-  var fpiRows = G.fpiData.fpiSheetCases||[];
-  var local   = G.fpiData.localCases||[];
+  var fpiRows  = G.fpiData.fpiSheetCases||[];
+  var local    = G.fpiData.localCases||[];
+  var matched  = G.fpiData.matchedCases||[];
+  var fpiError = G.fpiData.fpiError||'';
+  var headers  = G.fpiData.fpiHeaders||[];
 
   // KPIs
   var kpiEl = document.getElementById('fpi-dash-kpis');
   if(kpiEl) kpiEl.innerHTML=[
-    kcard2('Total FPI Cases', local.length, 'blue','#008771'),
+    kcard2('Local FPI Cases', local.length, 'blue','#008771'),
     kcard2('Open', local.filter(function(r){return r.status==='Open';}).length,'red','#c82828'),
     kcard2('Resolved', local.filter(function(r){return r.status==='Resolved';}).length,'green','#006b57'),
-    kcard2('Linked Sheet Cases', fpiRows.length,'purple','#5e4ec2')
+    kcard2('Sheet Cases Linked', fpiRows.length,'purple','#5e4ec2'),
+    kcard2('Matched Cases', matched.length,'amber','#8a8600')
   ].join('');
 
-  // Hub chart
+  // Hub chart from sheet data
   var hubCounts={};
-  local.forEach(function(r){if(r.hub)hubCounts[r.hub]=(hubCounts[r.hub]||0)+1;});
+  fpiRows.forEach(function(r){var h=r['_raw_hub']||r['hub']||r['Hub']||'';if(h)hubCounts[h]=(hubCounts[h]||0)+1;});
+  if(Object.keys(hubCounts).length===0) local.forEach(function(r){if(r.hub)hubCounts[r.hub]=(hubCounts[r.hub]||0)+1;});
   var hLabels=Object.keys(hubCounts).sort(function(a,b){return hubCounts[b]-hubCounts[a];}).slice(0,8);
   mkBarH('fpiHubChart', hLabels, hLabels.map(function(h){return hubCounts[h];}), '#008771');
 
-  // Status chart
-  var statCounts={'Open':0,'In Progress':0,'Resolved':0,'Pending':0};
-  local.forEach(function(r){if(statCounts.hasOwnProperty(r.status))statCounts[r.status]++;});
-  mkDoughnut('fpiStatusChart', Object.keys(statCounts), Object.values(statCounts), ['#c82828','#8a8600','#006b57','#5e4ec2']);
+  // Status chart — from sheet data
+  var statCounts={'Open':0,'In Progress':0,'Resolved':0,'Pending':0,'Closed':0};
+  fpiRows.forEach(function(r){
+    var s=r['status']||r['Status']||r['Case Status']||'';
+    if(statCounts.hasOwnProperty(s))statCounts[s]++;else if(s)statCounts['Open']++;
+  });
+  // fallback to local
+  if(fpiRows.length===0) local.forEach(function(r){if(statCounts.hasOwnProperty(r.status))statCounts[r.status]++;});
+  var stKeys=Object.keys(statCounts).filter(function(k){return statCounts[k]>0;});
+  mkDoughnut('fpiStatusChart', stKeys, stKeys.map(function(k){return statCounts[k];}), ['#c82828','#8a8600','#006b57','#5e4ec2','#007a6a']);
 
-  // Sheet table
+  // Error notice
   var stb = document.getElementById('fpiSheetTable'); if(!stb) return;
-  if(!fpiRows.length){ stb.innerHTML='<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--text-muted)">No data from FPI tracking sheet.</td></tr>'; return; }
+
+  if(fpiError){
+    stb.innerHTML='<tr><td colspan="5"><div style="padding:16px;background:#fff8e1;border:1px solid #fcd34d;border-radius:6px;font-size:12px;color:#92400e"><strong>⚠ FPI Sheet Connection Error:</strong><br>'+esc(fpiError)+'<br><br>Make sure the FPI sheet ID is correct and the Apps Script has permission to access it. Share the FPI sheet with the Apps Script service account email.</div></td></tr>';
+    return;
+  }
+
+  if(!fpiRows.length){
+    // Show local cases if no sheet data
+    if(local.length){
+      stb.innerHTML = local.map(function(r){
+        var sc = r.status==='Open'?'status-open':r.status==='Resolved'?'status-closed':'status-pending';
+        return '<tr><td>'+esc(r.hub)+'</td><td class="td-mono" style="font-size:11px">'+esc(r.awb_number)+'</td><td style="font-size:11px">'+esc(r.assigned_to)+'</td><td><span class="status-chip '+sc+'">'+esc(r.status)+'</span></td><td style="font-size:11px">'+esc(r.remarks||'—')+'</td></tr>';
+      }).join('');
+    } else {
+      stb.innerHTML='<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--text-muted)">No FPI data found in the linked sheet.<br><small>Ensure the sheet has a tab named <strong>FPI_Cases</strong> with hub and awb_number columns.</small></td></tr>';
+    }
+    return;
+  }
+
+  // Dynamically build table from sheet headers
+  // Find key fields
+  var hubH  = headers.find(function(h){return h.toLowerCase().replace(/[\s_]/g,'').includes('hub');}) || 'hub';
+  var awbH  = headers.find(function(h){return h.toLowerCase().replace(/[\s_]/g,'').includes('awb');}) || 'awb_number';
+  var pocH  = headers.find(function(h){return h.toLowerCase().includes('poc')||h.toLowerCase().includes('assigned');}) || 'poc';
+  var statH = headers.find(function(h){return h.toLowerCase().includes('status');}) || 'status';
+  var remH  = headers.find(function(h){return h.toLowerCase().includes('remark')||h.toLowerCase().includes('comment');}) || 'remarks';
+
   stb.innerHTML = fpiRows.map(function(r){
-    var hub = r['hub']||r['Hub']||'—';
-    var awbs= r['awb_number']||r['AWB Number']||r['awb']||'—';
-    var poc = r['poc']||r['POC']||r['assigned_to']||'—';
-    var stat= r['status']||r['Status']||'—';
-    var rem = r['remarks']||r['Remarks']||'—';
-    return '<tr><td>'+esc(hub)+'</td><td style="font-size:11px;max-width:180px;overflow:hidden;text-overflow:ellipsis" title="'+esc(awbs)+'">'+esc(awbs)+'</td><td style="font-size:11px">'+esc(poc)+'</td><td><span class="status-chip status-pending">'+esc(stat)+'</span></td><td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;font-size:11px" title="'+esc(rem)+'">'+esc(rem)+'</td></tr>';
+    var hub  = r[hubH]||r['_raw_hub']||'—';
+    var awbs = r[awbH]||r['_raw_awbs']||'—';
+    var poc  = r[pocH]||'—';
+    var stat = r[statH]||'—';
+    var rem  = r[remH]||'—';
+    var sc   = String(stat).toLowerCase().includes('resolv')?'status-closed':String(stat).toLowerCase().includes('progress')?'status-escalated':'status-pending';
+    return '<tr>'
+      +'<td style="font-weight:600">'+esc(hub)+'</td>'
+      +'<td style="font-size:11px;max-width:200px;overflow:hidden;text-overflow:ellipsis" title="'+esc(String(awbs))+'">'+esc(String(awbs).slice(0,60)+(String(awbs).length>60?'…':''))+'</td>'
+      +'<td style="font-size:11px">'+esc(poc)+'</td>'
+      +'<td><span class="status-chip '+sc+'">'+esc(stat)+'</span></td>'
+      +'<td style="font-size:11px;max-width:140px;overflow:hidden;text-overflow:ellipsis" title="'+esc(rem)+'">'+esc(rem)+'</td>'
+      +'</tr>';
   }).join('');
 }
 
@@ -1877,6 +1953,113 @@ function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'
 function kcard2(label, val, color, hex) {
   return '<div class="kpi-card '+color+'"><div class="kpi-label">'+label+'</div><div class="kpi-value" style="color:'+hex+'">'+Number(val||0).toLocaleString('en-IN')+'</div></div>';
 }
+
+// ════════════════════════════════════════
+// HUB DETAIL MODAL
+// ════════════════════════════════════════
+var G_currentHub = null;
+
+function openHubModal(hub, uploadType) {
+  G_currentHub = {hub:hub, uploadType:uploadType};
+  document.getElementById('hubModalTitle').textContent = '🏭 ' + hub;
+  document.getElementById('hubModalSub').textContent   = 'Loading hub data…';
+  document.getElementById('hubModalKpis').innerHTML    = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-muted)"><i class="fa fa-spinner fa-spin"></i> Loading…</div>';
+  document.getElementById('hubModalTable').innerHTML   = '';
+  document.getElementById('hubModalAwbs').textContent  = 'Loading…';
+  showModal('hubDetailModal');
+
+  apiGet({action:'getHubDetail', hub:hub, uploadType:uploadType||G.activeFM||'fraud_eng'})
+    .then(function(d){
+      if(!d||d.status==='error'){ document.getElementById('hubModalSub').textContent='Error loading data'; return; }
+      var rows    = d.rows||[];
+      var summary = d.summary||{};
+      var allAwbs = rows.map(function(r){return r.awb_number||'';}).filter(Boolean);
+      var totalPV = rows.reduce(function(s,r){return s+parsePV(r.product_value);},0);
+      var hubF    = uploadType==='xray'?'lm_hub':'hub';
+
+      document.getElementById('hubModalSub').textContent = uploadType.toUpperCase()+' · '+rows.length+' AWBs · ₹'+formatPV(totalPV);
+
+      // KPI cards
+      document.getElementById('hubModalKpis').innerHTML = [
+        '<div class="kpi-card blue" style="padding:10px 12px"><div class="kpi-label">Total AWBs</div><div class="kpi-value" style="color:#008771;font-size:20px">'+allAwbs.length+'</div></div>',
+        '<div class="kpi-card amber" style="padding:10px 12px"><div class="kpi-label">Product Value</div><div class="kpi-value" style="color:#8a8600;font-size:18px">'+formatPVStr(totalPV)+'</div></div>',
+        '<div class="kpi-card red" style="padding:10px 12px"><div class="kpi-label">High Risk</div><div class="kpi-value" style="color:#c82828;font-size:20px">'+rows.filter(function(r){return String(r.Risk_Level||'').toLowerCase()==='high';}).length+'</div></div>',
+        '<div class="kpi-card green" style="padding:10px 12px"><div class="kpi-label">Clients</div><div class="kpi-value" style="color:#006b57;font-size:20px">'+uniq(rows,'client').length+'</div></div>'
+      ].join('');
+
+      // AWB list
+      document.getElementById('hubModalAwbs').textContent = allAwbs.join(' · ')||'No AWBs found';
+      // Pre-fill action AWB field
+      document.getElementById('hubActAwb').value = allAwbs.slice(0,10).join(', ')+(allAwbs.length>10?'…':'');
+
+      // Detail table
+      var tb = document.getElementById('hubModalTable');
+      if(!rows.length){ tb.innerHTML='<tr><td colspan="7" style="text-align:center;padding:14px;color:var(--text-muted)">No row-level data found for this hub.</td></tr>'; return; }
+      tb.innerHTML = rows.slice(0,50).map(function(r){
+        var riskL  = r.Risk_Level||'';
+        var riskC  = riskL.toLowerCase()==='high'?'risk-badge high':riskL.toLowerCase()==='medium'?'risk-badge medium':riskL.toLowerCase()==='low'?'risk-badge low':'';
+        var stC    = String(r.order_status||'').toLowerCase()==='open'?'status-open':'status-pending';
+        var pv     = parsePV(r.product_value);
+        return '<tr>'
+          +'<td class="td-mono" style="color:var(--brand-teal);font-size:11px">'+esc(r.awb_number||'—')+'</td>'
+          +'<td class="td-muted" style="font-size:11px">'+esc((r.creation_date||r.x_ray_date||'').slice(0,10)||'—')+'</td>'
+          +'<td>'+esc(r.customer_name||'—')+'</td>'
+          +'<td style="max-width:100px;overflow:hidden;text-overflow:ellipsis;font-size:11px">'+esc(r.product_names||'—')+'</td>'
+          +'<td class="td-mono" style="font-size:11px">'+esc(pv?'₹'+pv.toLocaleString('en-IN'):'—')+'</td>'
+          +'<td><span class="status-chip '+stC+'">'+esc(r.order_status||'—')+'</span></td>'
+          +'<td>'+(riskL?'<span class="'+riskC+'">'+esc(riskL)+'</span>':'—')+'</td>'
+          +'</tr>';
+      }).join('');
+    })
+    .catch(function(e){ document.getElementById('hubModalSub').textContent='Network error: '+e.message; });
+}
+
+function submitHubAction(){
+  var hub     = G_currentHub&&G_currentHub.hub||'';
+  var awb     = document.getElementById('hubActAwb').value.trim().split(',')[0].trim();
+  var type    = document.getElementById('hubActType').value;
+  var pri     = document.getElementById('hubActPriority').value;
+  var rem     = document.getElementById('hubActRemarks').value.trim();
+  if(!hub)  { showToast('No hub selected','amber'); return; }
+  apiPost({action:'addAction', awb_number:awb, hub:hub, action_type:type, priority:pri, remarks:rem, taken_by:G.user?G.user.email:'Dashboard'})
+    .then(function(d){
+      if(d.status==='success'){
+        showToast('Action saved: '+d.id,'green');
+        document.getElementById('hubActRemarks').value='';
+        closeModal('hubDetailModal');
+        loadActions();
+      } else {
+        showToast('Failed: '+(d.message||'error'),'red');
+      }
+    });
+}
+
+// Show FPI note when FPI Investigation is selected in hub modal
+document.addEventListener('DOMContentLoaded',function(){
+  var sel=document.getElementById('hubActType');
+  if(sel)sel.addEventListener('change',function(){
+    var note=document.getElementById('hubActFpiNote');
+    if(note)note.style.display=sel.value==='FPI Investigation'?'block':'none';
+  });
+});
+
+function openHubModalFromBtn(btn){
+  var tr=btn.closest('tr');
+  if(tr) openHubModal(tr.getAttribute('data-hub')||'', tr.getAttribute('data-ut')||G.activeFM||'fraud_eng');
+}
+function parsePV(val){
+  if(val===null||val===undefined||val==='') return 0;
+  var s=String(val).replace(/[^0-9.]/g,'').trim();
+  if(!s) return 0;
+  var n=parseFloat(s);
+  return isNaN(n)?0:n;
+}
+function formatPV(n){
+  n=n||0;
+  return n>=10000000?'₹'+(n/10000000).toFixed(2)+'Cr':n>=100000?'₹'+(n/100000).toFixed(1)+'L':'₹'+Number(n).toLocaleString('en-IN');
+}
+function formatPVStr(n){ return formatPV(n); }
+function uniq(arr,field){var s={};arr.forEach(function(r){if(r[field])s[r[field]]=1;});return Object.keys(s);}
 </script>
 
 
@@ -2122,5 +2305,70 @@ function kcard2(label, val, color, hex) {
 
 })();
 </script>
+
+<!-- HUB DETAIL MODAL -->
+<div class="modal-overlay" id="hubDetailModal" style="align-items:flex-start;padding:20px;overflow-y:auto;">
+  <div class="modal" style="width:700px;max-width:95vw;max-height:90vh;overflow-y:auto;">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="hubModalTitle">Hub Detail</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:2px" id="hubModalSub">Loading…</div>
+      </div>
+      <span class="modal-close" onclick="closeModal('hubDetailModal')">×</span>
+    </div>
+    <div class="modal-body">
+      <!-- Summary Cards -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px" id="hubModalKpis"></div>
+      <!-- AWBs + Customer Details -->
+      <div style="margin-bottom:14px">
+        <div style="font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--text-secondary);letter-spacing:.07em;text-transform:uppercase;margin-bottom:7px">AWB Numbers</div>
+        <div id="hubModalAwbs" style="background:var(--bg-surface);border:1px solid var(--border);border-radius:6px;padding:10px;font-family:var(--font-code);font-size:11px;color:var(--text-secondary);max-height:80px;overflow-y:auto;word-break:break-all;line-height:1.8"></div>
+      </div>
+      <!-- AWB Detail Table -->
+      <div style="margin-bottom:16px">
+        <div style="font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--text-secondary);letter-spacing:.07em;text-transform:uppercase;margin-bottom:7px">Order Details</div>
+        <div class="table-wrap" style="max-height:200px;overflow-y:auto">
+          <table><thead><tr><th>AWB</th><th>Date</th><th>Customer</th><th>Product</th><th>Value</th><th>Status</th><th>Risk</th></tr></thead>
+          <tbody id="hubModalTable"></tbody></table>
+        </div>
+      </div>
+      <!-- Action Management -->
+      <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:8px;padding:14px">
+        <div style="font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--text-secondary);letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px">⚡ Action Management</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label">Action Type</label>
+            <select class="form-control" id="hubActType">
+              <option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option>
+              <option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option>
+              <option>Blacklist Hub</option><option>Watchlist Hub</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label">Priority</label>
+            <select class="form-control" id="hubActPriority">
+              <option value="High">🔴 High</option>
+              <option value="Medium" selected>🟡 Medium</option>
+              <option value="Low">🟢 Low</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:10px">
+          <label class="form-label">AWB Numbers (auto-filled)</label>
+          <input class="form-control" id="hubActAwb" type="text" placeholder="AWB numbers…" style="font-family:var(--font-code);font-size:11px">
+        </div>
+        <div class="form-group" style="margin-bottom:10px">
+          <label class="form-label">Remarks</label>
+          <textarea class="form-control" id="hubActRemarks" rows="2" placeholder="Add investigation notes…"></textarea>
+        </div>
+        <div id="hubActFpiNote" style="display:none;background:rgba(0,135,113,.08);border:1px solid rgba(0,135,113,.3);border-radius:6px;padding:8px 12px;font-size:11px;color:var(--brand-teal);margin-bottom:10px">
+          ⚡ FPI Investigation will be auto-assigned to: <strong>ashish.sheoran@shadowfax.in</strong>
+        </div>
+        <button class="btn btn-primary" onclick="submitHubAction()" style="width:100%;justify-content:center">Save Action</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
