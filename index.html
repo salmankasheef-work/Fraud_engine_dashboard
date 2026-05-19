@@ -70,25 +70,25 @@ body{font-family:var(--font-body);background:#f0f8f5;color:#0a2420;display:flex;
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
 
 /* ── FRAUD MONITORING VERTICAL TABS ── */
-.fraud-monitor-wrap{display:flex;gap:16px;align-items:flex-start;}
-.fm-tabs{display:flex;flex-direction:column;gap:4px;min-width:148px;padding-top:0;flex-shrink:0;}
+.fraud-monitor-wrap{display:flex;flex-direction:column;gap:12px;}
+.fm-tabs{display:flex;flex-direction:row;gap:6px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;}
+.fm-tabs::-webkit-scrollbar{height:3px;}
+.fm-tabs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
 .fm-tab{
-  display:flex;align-items:center;gap:9px;
-  padding:10px 14px;border-radius:8px;cursor:pointer;
-  font-size:12.5px;font-weight:500;
+  display:flex;align-items:center;gap:7px;
+  padding:8px 16px;border-radius:6px;cursor:pointer;
+  font-size:12px;font-weight:500;
   color:var(--text-secondary);
-  background:#fff;border:1px solid var(--border);
-  transition:all .15s;white-space:nowrap;
-  box-shadow:0 1px 3px rgba(0,0,0,.04);
+  background:#fff;border:1.5px solid var(--border);
+  transition:all .15s;white-space:nowrap;flex-shrink:0;
 }
 .fm-tab:hover{background:var(--bg-hover);border-color:var(--brand-teal);color:var(--brand-teal);}
 .fm-tab.active{
   background:var(--brand-teal);color:#fff;
-  border-color:var(--brand-teal);
-  font-weight:600;
-  box-shadow:0 4px 12px rgba(0,135,113,.25);
+  border-color:var(--brand-teal);font-weight:600;
+  box-shadow:0 3px 10px rgba(0,135,113,.22);
 }
-.fm-tab .fm-tab-icon{font-size:14px;width:18px;text-align:center;flex-shrink:0;}
+.fm-tab .fm-tab-icon{font-size:13px;flex-shrink:0;}
 .fm-content{flex:1;overflow:hidden;min-width:0;}
 .fm-panel{display:none;}
 .fm-panel.active{display:block;}
@@ -296,11 +296,14 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
   <div class="login-card">
     <!-- Logo centered with Shadowfax icon image -->
     <div class="login-logo-wrap">
-      <svg class="login-sfx-img" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100" height="100" rx="18" fill="#00a98f"/>
-        <!-- Shadowfax cursor/arrow mark — left triangle pointing down-right, notch, right triangle pointing up-right -->
-        <path d="M22,18 L48,72 Q50,78 56,72 L64,58 L78,26 Z" fill="#d4d700"/>
-        <path d="M48,72 Q50,78 56,72 L64,58 L56,62 Z" fill="#b8b800" opacity="0.55"/>
+      <svg class="login-sfx-img" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="200" rx="36" fill="#00a88e"/>
+        <!-- Left teardrop / downward pointer -->
+        <path d="M58,42 C58,42 42,90 55,130 C62,152 78,160 88,148 C95,138 88,118 92,100 C96,82 110,72 110,72 Z" fill="#cdd400"/>
+        <!-- Right arrow / wing pointing upper-right -->
+        <path d="M110,72 C110,72 136,56 158,44 C150,52 136,72 128,88 C122,100 120,112 120,112 C120,112 106,90 110,72 Z" fill="#cdd400"/>
+        <!-- Small gap/arch in middle of bottom -->
+        <path d="M88,148 C88,148 98,128 110,112 C122,96 120,112 120,112 C120,112 108,132 100,148 C96,156 90,156 88,148 Z" fill="#00a88e"/>
       </svg>
       <div class="login-logo-brand">SHADOWFAX</div>
       <div class="login-logo-sub">Fraud Engine · Trust &amp; Safety</div>
@@ -334,10 +337,11 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
 <!-- ══ SIDEBAR ══ -->
 <div class="sidebar">
   <div class="sidebar-logo">
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:30px;height:30px;border-radius:6px;flex-shrink:0;">
-      <rect width="100" height="100" rx="18" fill="#00a98f"/>
-      <path d="M22,18 L48,72 Q50,78 56,72 L64,58 L78,26 Z" fill="#d4d700"/>
-      <path d="M48,72 Q50,78 56,72 L64,58 L56,62 Z" fill="#b8b800" opacity="0.55"/>
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:30px;height:30px;border-radius:6px;flex-shrink:0;">
+      <rect width="200" height="200" rx="36" fill="#00a88e"/>
+      <path d="M58,42 C58,42 42,90 55,130 C62,152 78,160 88,148 C95,138 88,118 92,100 C96,82 110,72 110,72 Z" fill="#cdd400"/>
+      <path d="M110,72 C110,72 136,56 158,44 C150,52 136,72 128,88 C122,100 120,112 120,112 C120,112 106,90 110,72 Z" fill="#cdd400"/>
+      <path d="M88,148 C88,148 98,128 110,112 C122,96 120,112 120,112 C120,112 108,132 100,148 C96,156 90,156 88,148 Z" fill="#00a88e"/>
     </svg>
     <div>
       <div class="logo-brand">SHADOWFAX</div>
@@ -454,7 +458,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <select class="filter-select" id="fm-hub-f-bulk_cod" onchange="fmFilter('bulk_cod')"><option value="">All Hubs</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
-              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'bulk_cod')"></th><th>AWB Number</th><th>Category</th><th>Loss Type</th><th>SFX Status</th><th>Product Value</th><th>Product Description</th><th>Hub</th><th>City</th><th>State</th><th>Cx as Rider / Rider ID</th><th>Last Attempt LM Rider ID</th><th>Customer Name</th><th>Zone</th><th>POC Email</th><th>Action</th></tr></thead><tbody id="fm-table-bulk_cod"></tbody></table></div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'bulk_cod')"></th><th>AWB Number</th><th>Date</th><th>Product</th><th>Category</th><th>Value</th><th>Payment</th><th>Customer</th><th>Hub</th><th>Status</th><th>Client</th><th>Rider ID</th><th>Attempt</th><th>Action</th></tr></thead><tbody id="fm-table-bulk_cod"></tbody></table></div>
               <div class="pgn" id="fm-pgn-bulk_cod"></div>
             </div>
           </div>
@@ -477,7 +481,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <select class="filter-select" id="fm-hub-f-fraud_eng" onchange="fmFilter('fraud_eng')"><option value="">All Hubs</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
-              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'fraud_eng')"></th><th>AWB Number</th><th>Category</th><th>Loss Type</th><th>SFX Status</th><th>Product Value</th><th>Product Description</th><th>Hub</th><th>City</th><th>State</th><th>Cx as Rider / Rider ID</th><th>Last Attempt LM Rider ID</th><th>Customer Name</th><th>Zone</th><th>POC Email</th><th>Action</th></tr></thead><tbody id="fm-table-fraud_eng"></tbody></table></div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'fraud_eng')"></th><th>AWB Number</th><th>Date</th><th>Product</th><th>Category</th><th>Value</th><th>Payment</th><th>Customer</th><th>Hub</th><th>Status</th><th>Client</th><th>Rider ID</th><th>Attempt</th><th>Risk Level</th><th>Action</th></tr></thead><tbody id="fm-table-fraud_eng"></tbody></table></div>
               <div class="pgn" id="fm-pgn-fraud_eng"></div>
             </div>
           </div>
@@ -523,7 +527,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <select class="filter-select" id="fm-hub-f-qc" onchange="fmFilter('qc')"><option value="">All Hubs</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
-              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'qc')"></th><th>AWB Number</th><th>Category</th><th>Loss Type</th><th>SFX Status</th><th>Product Value</th><th>Product Description</th><th>Hub</th><th>City</th><th>State</th><th>Cx as Rider / Rider ID</th><th>Last Attempt LM Rider ID</th><th>Customer Name</th><th>Zone</th><th>POC Email</th><th>Action</th></tr></thead><tbody id="fm-table-qc"></tbody></table></div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'qc')"></th><th>AWB Number</th><th>Date</th><th>Product</th><th>Category</th><th>Value</th><th>Payment</th><th>Customer</th><th>Hub</th><th>Status</th><th>Client</th><th>Rider ID</th><th>Attempt</th><th>Action</th></tr></thead><tbody id="fm-table-qc"></tbody></table></div>
               <div class="pgn" id="fm-pgn-qc"></div>
             </div>
           </div>
@@ -546,7 +550,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <select class="filter-select" id="fm-hub-f-rtod" onchange="fmFilter('rtod')"><option value="">All Hubs</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
-              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'rtod')"></th><th>AWB Number</th><th>Category</th><th>Loss Type</th><th>SFX Status</th><th>Product Value</th><th>Product Description</th><th>Hub</th><th>City</th><th>State</th><th>Cx as Rider / Rider ID</th><th>Last Attempt LM Rider ID</th><th>Customer Name</th><th>Zone</th><th>POC Email</th><th>Action</th></tr></thead><tbody id="fm-table-rtod"></tbody></table></div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'rtod')"></th><th>AWB Number</th><th>Date</th><th>Product</th><th>Category</th><th>Value</th><th>Payment</th><th>Customer</th><th>Hub</th><th>Status</th><th>Client</th><th>Rider ID</th><th>Attempt</th><th>Action</th></tr></thead><tbody id="fm-table-rtod"></tbody></table></div>
               <div class="pgn" id="fm-pgn-rtod"></div>
             </div>
           </div>
@@ -569,7 +573,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <select class="filter-select" id="fm-hub-f-dbnu" onchange="fmFilter('dbnu')"><option value="">All Hubs</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
-              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'dbnu')"></th><th>AWB Number</th><th>Category</th><th>Loss Type</th><th>SFX Status</th><th>Product Value</th><th>Product Description</th><th>Hub</th><th>City</th><th>State</th><th>Cx as Rider / Rider ID</th><th>Last Attempt LM Rider ID</th><th>Customer Name</th><th>Zone</th><th>POC Email</th><th>Action</th></tr></thead><tbody id="fm-table-dbnu"></tbody></table></div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'dbnu')"></th><th>AWB Number</th><th>Date</th><th>Product</th><th>Category</th><th>Value</th><th>Payment</th><th>Customer</th><th>Hub</th><th>Status</th><th>Client</th><th>Rider ID</th><th>Attempt</th><th>Action</th></tr></thead><tbody id="fm-table-dbnu"></tbody></table></div>
               <div class="pgn" id="fm-pgn-dbnu"></div>
             </div>
           </div>
@@ -604,17 +608,17 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
             <input class="search-input" type="text" placeholder="Search hub, city…" oninput="filterDbTable('hub',this.value)">
             <select class="filter-select" onchange="filterDbTable('hub','')"><option>All Status</option><option>Blacklisted</option><option>Watchlist</option><option>Under Investigation</option><option>Active</option></select>
           </div>
-          <div class="table-wrap table-scroll"><table><thead><tr><th>Hub Code</th><th>Hub Name</th><th>City</th><th>Zone</th><th>Cases (Lifetime)</th><th>Fraud Types</th><th>Last Case</th><th>Status</th><th>Added</th></tr></thead><tbody id="hubDbTable"></tbody></table></div>
+          <div class="table-wrap table-scroll"><table><thead><tr><th>Hub</th><th>Cases (Lifetime)</th><th>Fraud Types</th><th>Last Case Date</th><th>Status</th><th>Added By</th><th>Date Added</th></tr></thead><tbody id="hubDbTable"></tbody></table></div>
         </div>
       </div>
 
       <!-- CUSTOMER DB -->
       <div id="db-customers" style="display:none">
         <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
-          <div class="kpi-card red"><div class="kpi-label">Total Fraud Customers</div><div class="kpi-value" style="color:var(--risk-high)" id="db-cust-total">—</div></div>
-          <div class="kpi-card blue"><div class="kpi-label">Blacklisted</div><div class="kpi-value" style="color:var(--brand-teal)" id="db-cust-bl">—</div></div>
-          <div class="kpi-card amber"><div class="kpi-label">Watchlist</div><div class="kpi-value" style="color:var(--risk-med)" id="db-cust-wl">—</div></div>
-          <div class="kpi-card green"><div class="kpi-label">High RTO%</div><div class="kpi-value" style="color:var(--risk-low)" id="db-cust-rto">—</div></div>
+          <div class="kpi-card red"><div class="kpi-label">Total Fraud Hubs</div><div class="kpi-value" style="color:var(--risk-high)" id="db-cust-total">—</div></div>
+          <div class="kpi-card blue"><div class="kpi-label">Total AWBs Linked</div><div class="kpi-value" style="color:var(--brand-teal)" id="db-cust-bl">—</div></div>
+          <div class="kpi-card amber"><div class="kpi-label">-</div><div class="kpi-value" style="color:var(--risk-med)" id="db-cust-wl">—</div></div>
+          <div class="kpi-card green"><div class="kpi-label">-</div><div class="kpi-value" style="color:var(--risk-low)" id="db-cust-rto">—</div></div>
         </div>
         <div class="card">
           <div class="card-header"><span class="card-title">Fraud Customer Master Database</span>
@@ -624,7 +628,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
             </div>
           </div>
           <div class="filters-bar"><input class="search-input" type="text" placeholder="Search mobile, name…" oninput="filterDbTable('customer',this.value)"></div>
-          <div class="table-wrap table-scroll"><table><thead><tr><th>Mobile</th><th>Customer Name</th><th>Address</th><th>City</th><th>Fraud Types</th><th>Total Orders</th><th>RTO%</th><th>Blacklist Score</th><th>Status</th><th>Date Added</th></tr></thead><tbody id="custDbTable"></tbody></table></div>
+          <div class="table-wrap table-scroll"><table><thead><tr><th>Hub</th><th>AWB Numbers</th><th>CX Name</th><th>CX Address</th><th>CX Number</th><th>Date Added</th></tr></thead><tbody id="custDbTable"></tbody></table></div>
         </div>
       </div>
 
@@ -1176,19 +1180,37 @@ function loadFMData(key) {
   var mod = G.dashData.modules[key];
   if (!mod) return;
 
-  // KPIs
+  // KPIs — Fraud Engine shows risk breakdown; others show count + product value
   var kpiEl = document.getElementById('fm-kpi-'+key);
-  if (kpiEl) kpiEl.innerHTML = [
-    kcard2('Total Cases', mod.count, 'blue', '#008771'),
-    kcard2('High Risk', mod.high, 'red', '#c82828'),
-    kcard2('Medium Risk', mod.medium, 'amber', '#8a8600'),
-    kcard2('Low Risk', mod.low, 'green', '#006b57'),
-    kcard2('Open Cases', mod.open, 'cyan', '#007a6a')
-  ].join('');
+  if (kpiEl) {
+    if (key === 'fraud_eng') {
+      kpiEl.innerHTML = [
+        kcard2('Total Cases', mod.count, 'blue', '#008771'),
+        kcard2('High Risk', mod.high, 'red', '#c82828'),
+        kcard2('Medium Risk', mod.medium, 'amber', '#8a8600'),
+        kcard2('Low Risk', mod.low, 'green', '#006b57'),
+        kcard2('Open Cases', mod.open, 'cyan', '#007a6a')
+      ].join('');
+    } else {
+      var pvFmt = mod.totalPV >= 100000
+        ? '₹' + (mod.totalPV/100000).toFixed(1) + 'L'
+        : '₹' + Number(mod.totalPV||0).toLocaleString('en-IN');
+      kpiEl.innerHTML = [
+        kcard2('Total Cases', mod.count, 'blue', '#008771'),
+        kcard2('Product Value', pvFmt, 'amber', '#8a8600'),
+        kcard2('Open Cases', mod.open, 'red', '#c82828'),
+        kcard2('Top Hubs', (mod.topHubs&&mod.topHubs.labels&&mod.topHubs.labels.length)||0, 'green', '#006b57')
+      ].join('');
+    }
+  }
 
   // Charts
   mkLineChart('fm-trend-'+key, mod.dailyTrend.labels, mod.dailyTrend.data, 'Cases', FM_COLORS[key]);
-  mkDoughnut('fm-risk-'+key, mod.riskDist.labels, mod.riskDist.data, ['#c82828','#8a8600','#006b57']);
+  if (key === 'fraud_eng') {
+    mkDoughnut('fm-risk-'+key, ['High','Medium','Low'], [mod.high||0, mod.medium||0, mod.low||0], ['#c82828','#8a8600','#006b57']);
+  } else {
+    mkBarH('fm-risk-'+key, mod.statusDist&&mod.statusDist.labels||[], mod.statusDist&&mod.statusDist.data||[], '#5e4ec2');
+  }
   mkBarH('fm-hub-'+key, mod.topHubs.labels, mod.topHubs.data, FM_COLORS[key]);
   mkBarH('fm-flag-'+key, mod.fraudFlags.labels, mod.fraudFlags.data, '#5e4ec2');
 
@@ -1260,43 +1282,43 @@ function renderFMTable(key, rows) {
     return;
   }
 
-  // General Part-1 columns for: bulk_cod, fraud_eng, qc, rtod, dbnu
+  // Standard fraud columns for all modules
+  var isFraudEng = (key === 'fraud_eng');
   tb.innerHTML = rows.map(function(r){
-    var awb    = r.AWB_Numbers    || r.awb_number   || r.AWB        || '—';
-    var cat    = r.Category       || r.category      || '—';
-    var loss   = r.Loss_Type      || r.loss_type     || '—';
-    var status = r.SFX_Status     || r.sfx_status    || r.order_status || '—';
-    var pval   = r.Product_Value  || r.product_value || '—';
-    var pdesc  = r.Product_Description || r.product_names || '—';
-    var hub    = getHub(r);
-    var city   = r.City           || r.city           || '—';
-    var state  = r.State          || r.state          || '—';
-    var cxrider= r['Cx_as_Rider-Rider_ID'] || r.cx_rider_id || '—';
-    var lmrider= r.Last_attempt_LM_Rider_id || r.LM_Rider   || '—';
-    var cxname = r['Customer name'] || r.CX_Name || r.customer_name || '—';
-    var zone   = r.Zone           || r.zone           || '—';
-    var poc    = r.POC_Email      || r.poc_email      || '—';
+    var awb    = r.awb_number    || r.AWB_Numbers || '—';
+    var date   = r.creation_date || '—';
+    var prod   = r.product_names || '—';
+    var cat    = r.product_categories || '—';
+    var pval   = r.product_value  || '—';
+    var pay    = r.payment_mode   || '—';
+    var cxname = r.customer_name  || '—';
+    var hub    = r.hub || r.Hub   || '—';
+    var status = r.order_status   || '—';
+    var client = r.client         || '—';
+    var rider  = r.sfx_rider_id   || r.rider_id || '—';
+    var att    = r.attempt_number || '—';
+    var riskL  = r.Risk_Level     || '';
+    var riskClass = riskL.toLowerCase()==='high'?'risk-badge high':riskL.toLowerCase()==='medium'?'risk-badge medium':riskL.toLowerCase()==='low'?'risk-badge low':'';
+    var stClass = status.toLowerCase()==='open'||status.toLowerCase()==='delivered'?'status-open':status.toLowerCase()==='closed'||status.toLowerCase()==='rto'?'status-closed':'status-pending';
     return '<tr>'
       +'<td><input type="checkbox" onclick="event.stopPropagation()"></td>'
       +'<td class="td-mono" style="color:var(--brand-teal)">'+esc(awb)+'</td>'
+      +'<td class="td-muted">'+esc(date?date.slice(0,10):'—')+'</td>'
+      +'<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis" title="'+esc(prod)+'">'+esc(prod)+'</td>'
       +'<td><span class="tag">'+esc(cat)+'</span></td>'
-      +'<td>'+esc(loss)+'</td>'
-      +'<td><span class="status-chip '+(status==='Open'?'status-open':status==='Closed'?'status-closed':'status-pending')+'">'+esc(status)+'</span></td>'
       +'<td class="td-mono">'+esc(pval?'₹'+pval:'—')+'</td>'
-      +'<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis" title="'+esc(pdesc)+'">'+esc(pdesc)+'</td>'
-      +'<td style="font-weight:600">'+esc(hub)+'</td>'
-      +'<td>'+esc(city)+'</td>'
-      +'<td>'+esc(state)+'</td>'
-      +'<td class="td-mono">'+esc(cxrider)+'</td>'
-      +'<td class="td-mono">'+esc(lmrider)+'</td>'
+      +'<td>'+esc(pay)+'</td>'
       +'<td>'+esc(cxname)+'</td>'
-      +'<td>'+esc(zone)+'</td>'
-      +'<td style="font-size:10px">'+esc(poc)+'</td>'
-      +'<td><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();actBtn(this)">⚡ Act</button></td>'
+      +'<td style="font-weight:600">'+esc(hub)+'</td>'
+      +'<td><span class="status-chip '+stClass+'">'+esc(status)+'</span></td>'
+      +'<td>'+esc(client)+'</td>'
+      +'<td class="td-mono">'+esc(rider)+'</td>'
+      +'<td class="td-mono">'+esc(att)+'</td>'
+      +(isFraudEng && riskL?'<td><span class="'+riskClass+'">'+esc(riskL)+'</span></td>':isFraudEng?'<td>—</td>':'')
+      +'<td><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();actBtn(this)">⚡</button></td>'
       +'</tr>';
   }).join('');
 }
-
 function fmSearch(key, val){ clearTimeout(fmSearch._t); fmSearch._t=setTimeout(function(){ loadFMTable(key,1,val); },300); }
 function fmFilter(key){ loadFMTable(key,1,''); }
 function toggleAllFM(cb, key){ document.querySelectorAll('#fm-table-'+key+' input[type=checkbox]').forEach(function(c){ c.checked=cb.checked; }); }
@@ -1323,17 +1345,22 @@ function loadDb(type) {
 }
 
 function updateDbKPIs(type, rows) {
-  if (type==='hub') {
+  if (type === 'hub') {
     setEl('db-hub-total', rows.length);
     setEl('db-hub-bl',  rows.filter(function(r){return r.status==='Blacklisted';}).length);
     setEl('db-hub-wl',  rows.filter(function(r){return r.status==='Watchlist';}).length);
     setEl('db-hub-inv', rows.filter(function(r){return r.status==='Under Investigation';}).length);
-  } else if (type==='customer') {
+  } else if (type === 'customer') {
     setEl('db-cust-total', rows.length);
-    setEl('db-cust-bl',  rows.filter(function(r){return r.status==='Blacklisted';}).length);
-    setEl('db-cust-wl',  rows.filter(function(r){return r.status==='Watchlist';}).length);
-    setEl('db-cust-rto', rows.filter(function(r){return parseFloat(r.rto_pct||0)>70;}).length);
-  } else if (type==='rider') {
+    // Count unique AWBs across all hubs
+    var allAwbs = 0;
+    rows.forEach(function(r){
+      if(r.awb_numbers) allAwbs += r.awb_numbers.split(',').filter(function(a){return a.trim();}).length;
+    });
+    setEl('db-cust-bl',  allAwbs);  // reuse card to show total AWBs
+    setEl('db-cust-wl',  0);
+    setEl('db-cust-rto', 0);
+  } else if (type === 'rider') {
     setEl('db-rider-total', rows.length);
     setEl('db-rider-inv',  rows.filter(function(r){return r.status==='Under Investigation';}).length);
     setEl('db-rider-term', rows.filter(function(r){return r.status==='Terminated';}).length);
@@ -1341,28 +1368,57 @@ function updateDbKPIs(type, rows) {
   }
 }
 
+
 function renderDbTable(type, rows) {
   var tbIds = { hub:'hubDbTable', customer:'custDbTable', rider:'riderDbTable' };
   var tb = document.getElementById(tbIds[type]); if(!tb) return;
-  if(!rows||!rows.length){ tb.innerHTML='<tr><td colspan="10" style="text-align:center;padding:20px;color:var(--text-muted)">No records. Upload or add manually.</td></tr>'; return; }
+  if(!rows||!rows.length){ tb.innerHTML='<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--text-muted)">No records. Upload or add manually.</td></tr>'; return; }
 
-  if (type==='hub') {
+  if (type === 'hub') {
     tb.innerHTML = rows.map(function(r){
       var sc = r.status==='Blacklisted'?'status-escalated':r.status==='Watchlist'?'status-pending':r.status==='Under Investigation'?'status-open':'status-closed';
-      return '<tr><td class="td-mono" style="color:var(--brand-teal)">'+esc(r.hub_code)+'</td><td style="font-weight:600">'+esc(r.hub_name)+'</td><td>'+esc(r.city)+'</td><td>'+esc(r.zone)+'</td><td class="td-mono" style="color:var(--risk-high)">'+esc(r.fraud_cases_lifetime)+'</td><td>'+esc(r.fraud_types).split(',').map(function(f){return '<span class="tag">'+esc(f.trim())+'</span>';}).join('')+'</td><td class="td-muted">'+esc(r.last_case_date?r.last_case_date.slice(0,10):'—')+'</td><td><span class="status-chip '+sc+'">'+esc(r.status)+'</span></td><td class="td-muted">'+esc(r.added_date?r.added_date.slice(0,10):'—')+'</td></tr>';
+      return '<tr>'
+        +'<td style="font-weight:600">'+esc(r.Hub)+'</td>'
+        +'<td class="td-mono" style="color:var(--risk-high)">'+esc(r.fraud_cases_lifetime||'0')+'</td>'
+        +'<td>'+esc(r.fraud_types||'—')+'</td>'
+        +'<td class="td-muted">'+esc(r.last_case_date?r.last_case_date.slice(0,10):'—')+'</td>'
+        +'<td><span class="status-chip '+sc+'">'+esc(r.status||'—')+'</span></td>'
+        +'<td class="td-muted">'+esc(r.added_by||'—')+'</td>'
+        +'<td class="td-muted">'+esc(r.added_date?r.added_date.slice(0,10):'—')+'</td>'
+        +'</tr>';
     }).join('');
-  } else if (type==='customer') {
+  } else if (type === 'customer') {
     tb.innerHTML = rows.map(function(r){
-      var sc = r.status==='Blacklisted'?'status-escalated':'status-pending';
-      return '<tr><td class="td-mono">'+esc(r.mobile)+'</td><td>'+esc(r.customer_name)+'</td><td style="max-width:120px;overflow:hidden;text-overflow:ellipsis">'+esc(r.address)+'</td><td>'+esc(r.city)+'</td><td>'+esc(r.fraud_types)+'</td><td class="td-mono">'+esc(r.total_orders)+'</td><td class="td-mono" style="color:var(--risk-high)">'+esc(r.rto_pct)+'%</td><td class="td-mono">'+esc(r.blacklist_score)+'</td><td><span class="status-chip '+sc+'">'+esc(r.status)+'</span></td><td class="td-muted">'+esc(r.added_date?r.added_date.slice(0,10):'—')+'</td></tr>';
+      // awb_numbers may be comma-separated list
+      var awbs = r.awb_numbers||'—';
+      var awbDisplay = awbs.length > 50 ? awbs.slice(0,50)+'…' : awbs;
+      return '<tr>'
+        +'<td style="font-weight:600">'+esc(r.Hub||'—')+'</td>'
+        +'<td class="td-mono" style="font-size:10px;max-width:180px;overflow:hidden;text-overflow:ellipsis" title="'+esc(awbs)+'">'+esc(awbDisplay)+'</td>'
+        +'<td>'+esc(r.CX_name||'—')+'</td>'
+        +'<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis" title="'+esc(r.CX_address||'')+'">'+esc(r.CX_address||'—')+'</td>'
+        +'<td class="td-mono">'+esc(r.CX_number||'—')+'</td>'
+        +'<td class="td-muted">'+esc(r.added_date?r.added_date.slice(0,10):'—')+'</td>'
+        +'</tr>';
     }).join('');
-  } else if (type==='rider') {
+  } else if (type === 'rider') {
     tb.innerHTML = rows.map(function(r){
       var sc = r.status==='Terminated'?'status-escalated':r.status==='Under Investigation'?'status-open':'status-pending';
-      return '<tr><td class="td-mono" style="color:var(--brand-teal)">'+esc(r.rider_id)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.hub)+'</td><td>'+esc(r.zone)+'</td><td><span class="tag">'+esc(r.fraud_type)+'</span></td><td class="td-mono">'+esc(r.fraud_cases)+'</td><td class="td-mono">'+esc(r.cod_fraud_amt?'₹'+r.cod_fraud_amt:'—')+'</td><td><span class="status-chip '+sc+'">'+esc(r.status)+'</span></td><td class="td-muted">'+esc(r.added_date?r.added_date.slice(0,10):'—')+'</td></tr>';
+      return '<tr>'
+        +'<td class="td-mono" style="color:var(--brand-teal)">'+esc(r.rider_id)+'</td>'
+        +'<td>'+esc(r.name)+'</td>'
+        +'<td>'+esc(r.hub)+'</td>'
+        +'<td>'+esc(r.zone)+'</td>'
+        +'<td><span class="tag">'+esc(r.fraud_type)+'</span></td>'
+        +'<td class="td-mono">'+esc(r.fraud_cases)+'</td>'
+        +'<td class="td-mono">'+esc(r.cod_fraud_amt?'₹'+r.cod_fraud_amt:'—')+'</td>'
+        +'<td><span class="status-chip '+sc+'">'+esc(r.status)+'</span></td>'
+        +'<td class="td-muted">'+esc(r.added_date?r.added_date.slice(0,10):'—')+'</td>'
+        +'</tr>';
     }).join('');
   }
 }
+
 
 function filterDbTable(type, search) {
   var src = G.dbData[type]||[];
