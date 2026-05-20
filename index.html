@@ -443,9 +443,10 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <input class="search-input" type="text" placeholder="Search AWB, customer…" id="fm-search-bulk_cod" oninput="fmSearch('bulk_cod',this.value)">
                 <select class="filter-select" id="fm-risk-f-bulk_cod" onchange="fmFilter('bulk_cod')"><option value="">All Risk</option><option>High</option><option>Medium</option><option>Low</option></select>
                 <select class="filter-select" id="fm-hub-f-bulk_cod" onchange="fmFilter('bulk_cod')"><option value="">All Hubs</option></select>
+                <select class="filter-select" id="fm-act-f-bulk_cod" onchange="fmFilter('bulk_cod')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
-              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'bulk_cod')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action</th></tr></thead><tbody id="fm-table-bulk_cod"></tbody></table></div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'bulk_cod')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action Type</th><th>Action</th></tr></thead><tbody id="fm-table-bulk_cod"></tbody></table></div>
               <div class="pgn" id="fm-pgn-bulk_cod"></div>
             </div>
           </div>
@@ -466,9 +467,10 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <input class="search-input" type="text" placeholder="Search AWB, customer…" id="fm-search-fraud_eng" oninput="fmSearch('fraud_eng',this.value)">
                 <select class="filter-select" id="fm-risk-f-fraud_eng" onchange="fmFilter('fraud_eng')"><option value="">All Risk</option><option>High</option><option>Medium</option><option>Low</option></select>
                 <select class="filter-select" id="fm-hub-f-fraud_eng" onchange="fmFilter('fraud_eng')"><option value="">All Hubs</option></select>
+                <select class="filter-select" id="fm-act-f-fraud_eng" onchange="fmFilter('fraud_eng')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
-              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'fraud_eng')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action</th></tr></thead><tbody id="fm-table-fraud_eng"></tbody></table></div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'fraud_eng')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action Type</th><th>Action</th></tr></thead><tbody id="fm-table-fraud_eng"></tbody></table></div>
               <div class="pgn" id="fm-pgn-fraud_eng"></div>
             </div>
           </div>
@@ -489,9 +491,10 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <input class="search-input" type="text" placeholder="Search AWB, customer, hub…" id="fm-search-xray" oninput="fmSearch('xray',this.value)">
                 <select class="filter-select" id="fm-risk-f-xray" onchange="fmFilter('xray')"><option value="">All Status</option><option>Open</option><option>Closed</option><option>Pending</option></select>
                 <select class="filter-select" id="fm-hub-f-xray" onchange="fmFilter('xray')"><option value="">All Hubs</option></select>
+                <select class="filter-select" id="fm-act-f-xray" onchange="fmFilter('xray')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
-              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'xray')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action</th></tr></thead><tbody id="fm-table-xray"></tbody></table></div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'xray')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action Type</th><th>Action</th></tr></thead><tbody id="fm-table-xray"></tbody></table></div>
               <div class="pgn" id="fm-pgn-xray"></div>
             </div>
           </div>
@@ -512,9 +515,10 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <input class="search-input" type="text" placeholder="Search AWB, customer…" id="fm-search-qc" oninput="fmSearch('qc',this.value)">
                 <select class="filter-select" id="fm-risk-f-qc" onchange="fmFilter('qc')"><option value="">All Risk</option><option>High</option><option>Medium</option><option>Low</option></select>
                 <select class="filter-select" id="fm-hub-f-qc" onchange="fmFilter('qc')"><option value="">All Hubs</option></select>
+                <select class="filter-select" id="fm-act-f-qc" onchange="fmFilter('qc')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
-              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'qc')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action</th></tr></thead><tbody id="fm-table-qc"></tbody></table></div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'qc')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action Type</th><th>Action</th></tr></thead><tbody id="fm-table-qc"></tbody></table></div>
               <div class="pgn" id="fm-pgn-qc"></div>
             </div>
           </div>
@@ -535,9 +539,10 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <input class="search-input" type="text" placeholder="Search AWB, customer…" id="fm-search-rtod" oninput="fmSearch('rtod',this.value)">
                 <select class="filter-select" id="fm-risk-f-rtod" onchange="fmFilter('rtod')"><option value="">All Risk</option><option>High</option><option>Medium</option><option>Low</option></select>
                 <select class="filter-select" id="fm-hub-f-rtod" onchange="fmFilter('rtod')"><option value="">All Hubs</option></select>
+                <select class="filter-select" id="fm-act-f-rtod" onchange="fmFilter('rtod')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
-              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'rtod')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action</th></tr></thead><tbody id="fm-table-rtod"></tbody></table></div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'rtod')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action Type</th><th>Action</th></tr></thead><tbody id="fm-table-rtod"></tbody></table></div>
               <div class="pgn" id="fm-pgn-rtod"></div>
             </div>
           </div>
@@ -558,9 +563,10 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <input class="search-input" type="text" placeholder="Search AWB, customer…" id="fm-search-dbnu" oninput="fmSearch('dbnu',this.value)">
                 <select class="filter-select" id="fm-risk-f-dbnu" onchange="fmFilter('dbnu')"><option value="">All Risk</option><option>High</option><option>Medium</option><option>Low</option></select>
                 <select class="filter-select" id="fm-hub-f-dbnu" onchange="fmFilter('dbnu')"><option value="">All Hubs</option></select>
+                <select class="filter-select" id="fm-act-f-dbnu" onchange="fmFilter('dbnu')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
-              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'dbnu')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action</th></tr></thead><tbody id="fm-table-dbnu"></tbody></table></div>
+              <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'dbnu')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action Type</th><th>Action</th></tr></thead><tbody id="fm-table-dbnu"></tbody></table></div>
               <div class="pgn" id="fm-pgn-dbnu"></div>
             </div>
           </div>
@@ -722,7 +728,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
         </div>
         <div class="table-wrap table-scroll">
           <table>
-            <thead><tr><th>Action ID</th><th>AWB No.</th><th>Hub</th><th>Action Type</th><th>Priority</th><th>Taken By</th><th>Date</th><th>Remarks</th><th>Status</th></tr></thead>
+            <thead><tr><th></th><th>Action ID</th><th>AWB No.</th><th>Hub</th><th>Action Type</th><th>Priority</th><th>Taken By</th><th>Date</th><th>Status</th></tr></thead>
             <tbody id="actionTable"></tbody>
           </table>
         </div>
@@ -1256,13 +1262,14 @@ function loadFMData(key) {
   loadFMTable(key, 1, '');
 }
 
-function loadFMTable(key, page, search) {
+function loadFMTable(key, page, search, actionType) {
   G.fmPage[key]   = page||1;
   G.fmSearch[key] = (search!==undefined)?search:(G.fmSearch[key]||'');
-  var risk = (document.getElementById('fm-risk-f-'+key)||{}).value||'';
-  var hub  = (document.getElementById('fm-hub-f-'+key)||{}).value||'';
+  var risk    = (document.getElementById('fm-risk-f-'+key)||{}).value||'';
+  var hub     = (document.getElementById('fm-hub-f-'+key)||{}).value||'';
+  var actFilt = actionType !== undefined ? actionType : ((document.getElementById('fm-act-f-'+key)||{}).value||'');
 
-  apiGet({action:'getTable', sheetKey:key, page:G.fmPage[key], search:G.fmSearch[key], risk:risk, hub:hub})
+  apiGet({action:'getTable', sheetKey:key, page:G.fmPage[key], search:G.fmSearch[key], risk:risk, hub:hub, action_type:actFilt})
     .then(function(d){
       if(!d||d.status==='error') return;
       G.fmData[key] = d.rows;
@@ -1307,7 +1314,19 @@ function renderFMTable(key, rows) {
       var clients= r.clients||'—';
       var upd    = r.last_updated?r.last_updated.slice(0,10):'—';
       var awbPreview = awbs.split(',').slice(0,3).join(', ')+(awbCnt>3?' +'+( awbCnt-3)+' more':'');
-      return '<tr data-hub="'+esc(hub)+'" data-ut="'+key+'" onclick="openHubModal(this.dataset.hub,this.dataset.ut)" style="cursor:pointer" title="Click to view all AWBs and take action">'        +'<td><input type="checkbox" onclick="event.stopPropagation()"></td>'        +'<td style="font-weight:700;color:var(--brand-teal)">'+esc(hub)+'</td>'        +'<td class="td-mono" style="color:var(--brand-teal)">'+awbCnt+'</td>'        +'<td class="td-mono" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;font-size:10px" title="'+esc(awbs)+'">'+esc(awbPreview)+'</td>'        +'<td class="td-mono" style="font-weight:700;color:var(--brand-teal)">'+pvFmt+'</td>'        +'<td style="font-size:11px;max-width:120px;overflow:hidden;text-overflow:ellipsis">'+esc(cats)+'</td>'        +'<td style="font-size:11px">'+esc(stats)+'</td>'        +'<td><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openHubModalFromBtn(this)">⚡ View</button></td>'        +'</tr>';
+      var actType = r.action_type||'Unassigned';
+      var actColor = actType==='Unassigned'?'color:var(--text-muted)':actType==='SZM Visit'?'color:#5e4ec2':actType==='DBNU'?'color:var(--risk-high)':actType==='FPI Investigation'?'color:var(--brand-teal)':'color:var(--risk-med)';
+      return '<tr data-hub="'+esc(hub)+'" data-ut="'+key+'" onclick="openHubModal(this.dataset.hub,this.dataset.ut)" style="cursor:pointer" title="Click to view all AWBs and take action">'
+        +'<td><input type="checkbox" onclick="event.stopPropagation()"></td>'
+        +'<td style="font-weight:700;color:var(--brand-teal)">'+esc(hub)+'</td>'
+        +'<td class="td-mono">'+awbCnt+'</td>'
+        +'<td class="td-mono" style="max-width:180px;overflow:hidden;text-overflow:ellipsis;font-size:10px" title="'+esc(awbs)+'">'+esc(awbPreview)+'</td>'
+        +'<td class="td-mono" style="font-weight:700;color:var(--brand-teal)">'+pvFmt+'</td>'
+        +'<td style="font-size:11px;max-width:110px;overflow:hidden;text-overflow:ellipsis">'+esc(cats)+'</td>'
+        +'<td style="font-size:11px">'+esc(stats)+'</td>'
+        +'<td style="font-weight:600;font-size:11px;'+actColor+'">'+esc(actType)+'</td>'
+        +'<td><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openHubModalFromBtn(this)">⚡ View</button></td>'
+        +'</tr>';
     }).join('');
     return;
   }
@@ -1340,7 +1359,10 @@ function renderFMTable(key, rows) {
 }
 
 function fmSearch(key, val){ clearTimeout(fmSearch._t); fmSearch._t=setTimeout(function(){ loadFMTable(key,1,val); },300); }
-function fmFilter(key){ loadFMTable(key,1,''); }
+function fmFilter(key){
+  var actFilter = document.getElementById('fm-act-f-'+key);
+  loadFMTable(key, 1, '', actFilter?actFilter.value:'');
+}
 function toggleAllFM(cb, key){ document.querySelectorAll('#fm-table-'+key+' input[type=checkbox]').forEach(function(c){ c.checked=cb.checked; }); }
 
 // ════════════════════════════════════════
@@ -1627,21 +1649,57 @@ function loadActions() {
 
 function renderActionTable(rows) {
   var tb = document.getElementById('actionTable'); if(!tb) return;
-  if(!rows||!rows.length){ tb.innerHTML='<tr><td colspan="9" style="text-align:center;padding:20px;color:var(--text-muted)">No actions yet.</td></tr>'; return; }
-  tb.innerHTML = rows.map(function(r){
-    var pc = r.priority==='High'?'priority-high':r.priority==='Low'?'priority-low':'priority-med';
-    var sc = r.status==='Open'?'status-open':r.status==='Completed'?'status-closed':'status-pending';
-    return '<tr><td class="td-mono" style="color:var(--text-muted)">'+esc(r.action_id)+'</td>'
-      +'<td class="td-mono" style="color:var(--brand-teal)">'+esc(r.awb_number)+'</td>'
-      +'<td>'+esc(r.hub)+'</td>'
-      +'<td><span class="tag">'+esc(r.action_type)+'</span></td>'
+  if(!rows||!rows.length){ tb.innerHTML='<tr><td colspan="10" style="text-align:center;padding:24px;color:var(--text-muted)">No actions yet.</td></tr>'; return; }
+  tb.innerHTML = rows.map(function(r, i){
+    var pc   = r.priority==='High'?'priority-high':r.priority==='Low'?'priority-low':'priority-med';
+    var sc   = r.status==='Open'?'status-open':r.status==='Completed'?'status-closed':'status-pending';
+    var atColor = r.action_type==='SZM Visit'?'color:#5e4ec2':r.action_type==='DBNU'?'color:var(--risk-high)':r.action_type==='FPI Investigation'?'color:var(--brand-teal)':'';
+    var pvFmt = r.total_product_value ? (parseInt(r.total_product_value)>=100000?'₹'+(parseInt(r.total_product_value)/100000).toFixed(1)+'L':'₹'+parseInt(r.total_product_value).toLocaleString('en-IN')) : '—';
+    var mainRow = '<tr onclick="toggleActionRow(this)" style="cursor:pointer" title="Click to expand">'
+      +'<td><span style="font-size:10px;color:var(--text-muted)">▶</span></td>'
+      +'<td class="td-mono" style="color:var(--text-muted);font-size:10px">'+esc(r.action_id)+'</td>'
+      +'<td class="td-mono" style="color:var(--brand-teal)">'+esc(r.awb_number||'—')+'</td>'
+      +'<td style="font-weight:600">'+esc(r.hub||'—')+'</td>'
+      +'<td><span class="tag" style="'+atColor+'">'+esc(r.action_type)+'</span></td>'
       +'<td><span class="'+pc+'">'+esc(r.priority)+'</span></td>'
       +'<td style="font-size:11px">'+esc(r.taken_by)+'</td>'
       +'<td class="td-muted">'+esc(r.taken_at?r.taken_at.slice(0,10):'—')+'</td>'
-      +'<td style="max-width:140px;overflow:hidden;text-overflow:ellipsis" title="'+esc(r.remarks)+'">'+esc(r.remarks||'—')+'</td>'
       +'<td><span class="status-chip '+sc+'">'+esc(r.status)+'</span></td>'
       +'</tr>';
+
+    // Expandable detail row
+    var expandRow = '<tr class="action-expand-row" style="display:none;background:var(--bg-surface)">'
+      +'<td colspan="9" style="padding:12px 20px">'
+      +'<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">'
+      +'<div><div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Remarks</div><div style="font-size:12px;color:var(--text-primary)">'+esc(r.remarks||'No remarks')+'</div></div>'
+      +'<div><div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Total AWBs</div><div style="font-size:12px;font-weight:600;color:var(--brand-teal)">'+esc(String(r.total_awbs||'—'))+'</div></div>'
+      +'<div><div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Product Value</div><div style="font-size:12px;font-weight:600;color:var(--brand-teal)">'+pvFmt+'</div></div>'
+      +'<div style="grid-column:1/-1"><div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">AWB Numbers</div><div style="font-size:11px;font-family:var(--font-code);color:var(--text-secondary);background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:6px 8px;max-height:50px;overflow-y:auto">'+esc(r.awb_numbers||r.awb_number||'—')+'</div></div>'
+      +'</div>'
+      +'<div style="margin-top:10px;display:flex;gap:8px">'
+      +'<button class="btn btn-success btn-sm" data-act-id="'+esc(r.action_id)+'" onclick="event.stopPropagation();markActionComplete(this)">✓ Mark Completed</button>'
+      +'<button class="btn btn-ghost btn-sm" data-hub="'+esc(r.hub||'')+'" onclick="event.stopPropagation();viewHubFromBtn(this)">🏭 View Hub</button>'
+      +'</div></td></tr>';
+
+    return mainRow + expandRow;
   }).join('');
+}
+
+function markActionComplete(btn){ var id=btn.getAttribute('data-act-id'); if(id) updateActionStatus(id,'Completed'); }
+function viewHubFromBtn(btn){ var hub=btn.getAttribute('data-hub'); if(hub) openHubModal(hub,''); }
+function toggleActionRow(tr) {
+  var next = tr.nextElementSibling;
+  if(next && next.classList.contains('action-expand-row')) {
+    var isOpen = next.style.display !== 'none';
+    next.style.display = isOpen ? 'none' : 'table-row';
+    var arrow = tr.querySelector('span');
+    if(arrow) arrow.textContent = isOpen ? '▶' : '▼';
+  }
+}
+
+function updateActionStatus(actionId, newStatus) {
+  apiPost({action:'updateAction', action_id:actionId, status:newStatus})
+    .then(function(d){ if(d.status==='success'){showToast('Action updated','green');loadActions();}else showToast('Failed: '+(d.message||''),'red'); });
 }
 
 
@@ -1966,6 +2024,66 @@ function hideUploadProgress() {
     if(el) el.style.display='none';
     if(fill) fill.style.width='0%';
   }, 600);
+}
+
+
+// Email Preview
+function showEmailPreview(type) {
+  ['szm','dbnu','reminder'].forEach(function(t){
+    var b=document.getElementById('prev-btn-'+t);
+    if(b) b.className = t===type ? 'btn btn-sm' : 'btn btn-ghost btn-sm';
+    if(b && t===type) b.style.cssText='background:var(--brand-teal);color:#fff';
+    if(b && t!==type) b.style.cssText='';
+  });
+  var meta = document.getElementById('emailPreviewMeta');
+  var frame = document.getElementById('emailPreviewFrame');
+  if(!frame) return;
+  if(type==='szm'){
+    if(meta) meta.innerHTML='<strong>To:</strong> mohammed.alam@shadowfax.in &nbsp;|&nbsp; <strong>Trigger:</strong> When SZM Visit action is submitted for any hub';
+    frame.innerHTML = buildSampleEmail({title:'SZM Visit Action Triggered',subtitle:'Hub-level SZM Visit has been initiated',emoji:'🏠',color:'#5e4ec2',to:'mohammed.alam@shadowfax.in',hub:'Sample Hub 1979',module:'xray',takenBy:G.user?G.user.email:'ops@shadowfax.in',remarks:'High X-Ray detection rate. Physical visit required to verify consignments.',actionId:'ACT-1234567',pvTotal:'₹4.2L',totalHubs:1});
+  } else if(type==='dbnu'){
+    if(meta) meta.innerHTML='<strong>To:</strong> salman.kasheef@shadowfax.in &nbsp;|&nbsp; <strong>Trigger:</strong> When DBNU action is submitted for any hub';
+    frame.innerHTML = buildSampleEmail({title:'DBNU Action Triggered',subtitle:'Hub marked for DBNU — Do Not Use',emoji:'🚫',color:'#c82828',to:'salman.kasheef@shadowfax.in',hub:'Sample Hub 2598',module:'bulk_cod',takenBy:G.user?G.user.email:'ops@shadowfax.in',remarks:'Multiple fraud patterns detected. Hub flagged for DBNU.',actionId:'ACT-7654321',pvTotal:'₹7.8L',totalHubs:1});
+  } else {
+    if(meta) meta.innerHTML='<strong>To:</strong> Neha.deshwal@shadowfax.in &nbsp;|&nbsp; <strong>Trigger:</strong> Runs daily at 9 AM · Sends when hub/customer records are 15+ days old';
+    frame.innerHTML = buildReminderEmailPreview();
+  }
+}
+function buildSampleEmail(o){
+  return '<div style="max-width:720px;margin:0 auto;background:#fff;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.1);overflow:hidden;font-family:IBM Plex Sans,Arial,sans-serif">'
+    +'<div style="background:#008771;padding:18px 28px;display:flex;align-items:center;gap:14px">'
+    +'<div style="background:#00a88e;width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px">'+o.emoji+'</div>'
+    +'<div><div style="color:#fff;font-weight:700;font-size:16px">SHADOWFAX FRAUD ENGINE</div><div style="color:#80d4c8;font-size:11px;text-transform:uppercase;letter-spacing:.07em">'+o.title+'</div></div>'
+    +'<div style="margin-left:auto;background:'+o.color+';color:#fff;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700">'+o.actionId+'</div></div>'
+    +'<div style="padding:24px 28px">'
+    +'<p style="color:#235c50;font-size:13px;line-height:1.6;margin-bottom:20px"><strong>'+o.subtitle+'</strong> has been triggered.</p>'
+    +'<div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap">'
+    +'<div style="background:#f0f8f5;border:1px solid #b5d8cf;border-radius:8px;padding:12px 16px;flex:1"><div style="font-size:10px;color:#5e9b90;text-transform:uppercase;margin-bottom:5px">Hub</div><div style="font-size:18px;font-weight:700;color:#008771">'+o.hub+'</div></div>'
+    +'<div style="background:#f0f8f5;border:1px solid #b5d8cf;border-radius:8px;padding:12px 16px;flex:1"><div style="font-size:10px;color:#5e9b90;text-transform:uppercase;margin-bottom:5px">Module</div><div style="font-size:14px;font-weight:700;color:#235c50">'+o.module+'</div></div>'
+    +'<div style="background:#f0f8f5;border:1px solid #b5d8cf;border-radius:8px;padding:12px 16px;flex:1"><div style="font-size:10px;color:#5e9b90;text-transform:uppercase;margin-bottom:5px">Product Value</div><div style="font-size:14px;font-weight:700;color:#008771">'+o.pvTotal+'</div></div></div>'
+    +'<div style="background:#fff8e1;border:1px solid #fcd34d;border-radius:8px;padding:12px 16px;margin-bottom:20px"><div style="font-size:10px;color:#92400e;text-transform:uppercase;margin-bottom:5px">Remarks</div><div style="font-size:13px;color:#235c50">'+o.remarks+'</div></div>'
+    +'<div style="background:#f7fcfa;border:1px solid #b5d8cf;border-radius:8px;overflow:hidden;margin-bottom:20px">'
+    +'<div style="padding:8px 12px;background:#008771"><span style="color:#fff;font-weight:700;font-size:12px">Hub Data Summary</span></div>'
+    +'<table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr style="background:#e8f4ef"><th style="padding:8px 12px;text-align:left;color:#5e9b90;font-size:10px">Hub</th><th style="padding:8px 12px;text-align:center;color:#5e9b90;font-size:10px">AWBs</th><th style="padding:8px 12px;text-align:left;color:#5e9b90;font-size:10px">Product Value</th><th style="padding:8px 12px;text-align:left;color:#5e9b90;font-size:10px">Categories</th></tr></thead>'
+    +'<tbody><tr><td style="padding:8px 12px;font-weight:600">'+o.hub+'</td><td style="padding:8px 12px;text-align:center">84</td><td style="padding:8px 12px;font-weight:600;color:#008771">'+o.pvTotal+'</td><td style="padding:8px 12px;font-size:11px">Electronics, Apparel</td></tr></tbody></table></div>'
+    +'<div style="background:#f0f8f5;border-radius:8px;padding:14px 18px"><a href="#" style="background:#008771;color:#fff;padding:9px 20px;border-radius:6px;text-decoration:none;font-weight:700;font-size:12px">Open Fraud Engine →</a></div>'
+    +'<p style="font-size:11px;color:#5e9b90;margin-top:16px;text-align:center">Shadowfax Fraud Engine · Auto-generated · Do not reply</p>'
+    +'</div></div>';
+}
+function buildReminderEmailPreview(){
+  return '<div style="max-width:700px;margin:0 auto;background:#fff;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.1);overflow:hidden;font-family:IBM Plex Sans,Arial,sans-serif">'
+    +'<div style="background:#008771;padding:18px 28px"><div style="color:#fff;font-weight:700;font-size:16px">SHADOWFAX FRAUD ENGINE</div><div style="color:#80d4c8;font-size:11px;text-transform:uppercase">15-Day Fraud Database Review Reminder</div></div>'
+    +'<div style="padding:24px 28px">'
+    +'<p style="color:#235c50;font-size:13px;line-height:1.6;margin-bottom:20px">Hi Neha,<br><br>This is an automated reminder. The following fraud database entries are older than <strong>15 days</strong> and require review.</p>'
+    +'<div style="display:flex;gap:14px;margin-bottom:20px">'
+    +'<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:14px 18px;flex:1;text-align:center"><div style="font-size:11px;color:#991b1b;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Fraud Hubs Pending</div><div style="font-size:28px;font-weight:700;color:#c82828">12</div></div>'
+    +'<div style="background:#fff8e1;border:1px solid #fcd34d;border-radius:8px;padding:14px 18px;flex:1;text-align:center"><div style="font-size:11px;color:#92400e;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Fraud Customers Pending</div><div style="font-size:28px;font-weight:700;color:#d97706">8</div></div>'
+    +'<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:14px 18px;flex:1;text-align:center"><div style="font-size:11px;color:#166534;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Review Date</div><div style="font-size:14px;font-weight:700;color:#15803d">Today</div></div>'
+    +'</div>'
+    +'<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:20px"><thead><tr style="background:#f0f8f5"><th style="padding:8px 10px;text-align:left;color:#5e9b90;font-size:10px;text-transform:uppercase">Hub</th><th style="padding:8px 10px;text-align:left;color:#5e9b90;font-size:10px">Cases</th><th style="padding:8px 10px;text-align:left;color:#5e9b90;font-size:10px">Fraud Types</th><th style="padding:8px 10px;text-align:left;color:#5e9b90;font-size:10px">Status</th><th style="padding:8px 10px;text-align:left;color:#5e9b90;font-size:10px">Added</th></tr></thead>'
+    +'<tbody><tr><td style="padding:7px 10px;border-bottom:1px solid #e8f4f0;font-weight:600">Hub 1979</td><td style="padding:7px 10px;border-bottom:1px solid #e8f4f0">84</td><td style="padding:7px 10px;border-bottom:1px solid #e8f4f0">X-Ray, Collusion</td><td style="padding:7px 10px;border-bottom:1px solid #e8f4f0"><span style="background:#fde8e8;color:#c82828;padding:2px 8px;border-radius:3px;font-size:11px">Blacklisted</span></td><td style="padding:7px 10px;border-bottom:1px solid #e8f4f0">2026-04-30</td></tr></tbody></table>'
+    +'<div style="background:#f0f8f5;border-radius:8px;padding:14px 18px"><a href="#" style="background:#008771;color:#fff;padding:9px 20px;border-radius:6px;text-decoration:none;font-weight:700;font-size:12px">Open Fraud Engine →</a></div>'
+    +'<p style="font-size:11px;color:#5e9b90;margin-top:16px;text-align:center">Shadowfax Fraud Engine · Auto-generated · Do not reply</p></div></div>';
 }
 
 function kcard2(label, val, color, hex) {
@@ -2397,6 +2515,26 @@ function uniq(arr,field){var s={};arr.forEach(function(r){if(r[field])s[r[field]
   </div>
   <div style="background:#1c5c4a;border-radius:4px;height:4px;overflow:hidden;">
     <div id="uploadProgressFill" style="height:100%;background:linear-gradient(90deg,#008771,#d4d026);border-radius:4px;transition:width .4s;width:0%"></div>
+  </div>
+</div>
+
+
+<!-- Email Preview Modal -->
+<div class="modal-overlay" id="emailPreviewModal" style="align-items:flex-start;padding:20px;overflow-y:auto;">
+  <div class="modal" style="width:740px;max-width:96vw;max-height:92vh;overflow-y:auto;">
+    <div class="modal-header">
+      <span class="modal-title">📧 Email Preview — Automated Mailer Format</span>
+      <span class="modal-close" onclick="closeModal('emailPreviewModal')">×</span>
+    </div>
+    <div class="modal-body" style="padding:0">
+      <div style="padding:12px 16px;background:var(--bg-surface);border-bottom:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-sm" id="prev-btn-szm" onclick="showEmailPreview('szm')" style="background:var(--brand-teal);color:#fff">🏠 SZM Visit Email</button>
+        <button class="btn btn-ghost btn-sm" id="prev-btn-dbnu" onclick="showEmailPreview('dbnu')">🚫 DBNU Email</button>
+        <button class="btn btn-ghost btn-sm" id="prev-btn-reminder" onclick="showEmailPreview('reminder')">🔔 15-Day Reminder</button>
+      </div>
+      <div style="padding:14px 16px;font-size:11px;color:var(--text-muted);background:var(--bg-surface);border-bottom:1px solid var(--border)" id="emailPreviewMeta"></div>
+      <div id="emailPreviewFrame" style="padding:14px;background:#f5f5f5;min-height:400px;"></div>
+    </div>
   </div>
 </div>
 
