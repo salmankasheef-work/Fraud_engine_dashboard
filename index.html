@@ -1231,7 +1231,7 @@ function loadFMData(key) {
         ? '₹' + (rawPV/100000).toFixed(1) + 'L'
         : rawPV > 0
         ? '₹' + rawPV.toLocaleString('en-IN')
-        : '₹0';
+        : '—';
       kpiEl.innerHTML = [
         kcard2('Total Cases', mod.count, 'blue', '#008771'),
         kcard2('Product Value', pvFmt, 'amber', '#8a8600'),
@@ -1323,7 +1323,7 @@ function renderFMTable(key, rows) {
       var clients= r.clients||'—';
       var upd    = r.last_updated?r.last_updated.slice(0,10):'—';
       var awbPreview = awbs.split(',').slice(0,3).join(', ')+(awbCnt>3?' +'+( awbCnt-3)+' more':'');
-      var actType = r.action_type||'Unassigned';
+      var actType = r.action_type||r['action_type']||'Unassigned';
       var actColor = actType==='Unassigned'?'color:var(--text-muted)':actType==='SZM Visit'?'color:#5e4ec2':actType==='DBNU'?'color:var(--risk-high)':actType==='FPI Investigation'?'color:var(--brand-teal)':'color:var(--risk-med)';
       return '<tr data-hub="'+esc(hub)+'" data-ut="'+key+'" onclick="openHubModal(this.dataset.hub,this.dataset.ut)" style="cursor:pointer" title="Click to view all AWBs and take action">'
         +'<td><input type="checkbox" onclick="event.stopPropagation()"></td>'
@@ -1761,8 +1761,19 @@ function submitAction() {
   apiPost({action:'addAction', awb_number:awb, hub:hub, uploadType:uploadType, upload_type:uploadType, action_type:type, priority:pri, remarks:rem, taken_by:G.user?G.user.email:'Dashboard'})
     .then(function(d){
       closeModal('actionModal');
-      showToast(d.status==='success'?'Action created: '+d.id:'Error: '+(d.message||''),'blue');
-      if(d.status==='success') loadActions();
+      if(d.status==='success'){
+        showToast('Action created: '+d.id,'green');
+        loadActions();
+        // Refresh FM table and dashboard to reflect updated action_type
+        setTimeout(function(){
+          loadFMTable(G.activeFM||'fraud_eng', 1, '');
+          apiGet({action:'getDashboard'}).then(function(d2){
+            if(d2&&d2.status==='success') G.dashData=d2;
+          });
+        }, 800);
+      } else {
+        showToast('Error: '+(d.message||'unknown error'),'red');
+      }
     });
 }
 
@@ -2195,6 +2206,15 @@ function submitHubAction(){
         document.getElementById('hubActRemarks').value='';
         closeModal('hubDetailModal');
         loadActions();
+        // Reload the FM table so the action_type column updates immediately
+        var key = G.activeFM||'fraud_eng';
+        setTimeout(function(){
+          loadFMTable(key, G.fmPage[key]||1, G.fmSearch[key]||'');
+          // Also refresh dashboard data to get updated hub_grouped
+          apiGet({action:'getDashboard'}).then(function(d2){
+            if(d2&&d2.status==='success') G.dashData=d2;
+          });
+        }, 800);
       } else {
         showToast('Failed: '+(d.message||'error'),'red');
       }
