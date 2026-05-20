@@ -443,7 +443,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <input class="search-input" type="text" placeholder="Search AWB, customer…" id="fm-search-bulk_cod" oninput="fmSearch('bulk_cod',this.value)">
                 <select class="filter-select" id="fm-risk-f-bulk_cod" onchange="fmFilter('bulk_cod')"><option value="">All Risk</option><option>High</option><option>Medium</option><option>Low</option></select>
                 <select class="filter-select" id="fm-hub-f-bulk_cod" onchange="fmFilter('bulk_cod')"><option value="">All Hubs</option></select>
-                <select class="filter-select" id="fm-act-f-bulk_cod" onchange="fmFilter('bulk_cod')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
+                <select class="filter-select" id="fm-act-f-bulk_cod" onchange="fmFilter('bulk_cod')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>DBNU Calling</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
               <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'bulk_cod')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action Type</th><th>Action</th></tr></thead><tbody id="fm-table-bulk_cod"></tbody></table></div>
@@ -467,7 +467,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <input class="search-input" type="text" placeholder="Search AWB, customer…" id="fm-search-fraud_eng" oninput="fmSearch('fraud_eng',this.value)">
                 <select class="filter-select" id="fm-risk-f-fraud_eng" onchange="fmFilter('fraud_eng')"><option value="">All Risk</option><option>High</option><option>Medium</option><option>Low</option></select>
                 <select class="filter-select" id="fm-hub-f-fraud_eng" onchange="fmFilter('fraud_eng')"><option value="">All Hubs</option></select>
-                <select class="filter-select" id="fm-act-f-fraud_eng" onchange="fmFilter('fraud_eng')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
+                <select class="filter-select" id="fm-act-f-fraud_eng" onchange="fmFilter('fraud_eng')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>DBNU Calling</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
               <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'fraud_eng')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action Type</th><th>Action</th></tr></thead><tbody id="fm-table-fraud_eng"></tbody></table></div>
@@ -491,7 +491,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <input class="search-input" type="text" placeholder="Search AWB, customer, hub…" id="fm-search-xray" oninput="fmSearch('xray',this.value)">
                 <select class="filter-select" id="fm-risk-f-xray" onchange="fmFilter('xray')"><option value="">All Status</option><option>Open</option><option>Closed</option><option>Pending</option></select>
                 <select class="filter-select" id="fm-hub-f-xray" onchange="fmFilter('xray')"><option value="">All Hubs</option></select>
-                <select class="filter-select" id="fm-act-f-xray" onchange="fmFilter('xray')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
+                <select class="filter-select" id="fm-act-f-xray" onchange="fmFilter('xray')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>DBNU Calling</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
               <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'xray')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action Type</th><th>Action</th></tr></thead><tbody id="fm-table-xray"></tbody></table></div>
@@ -515,7 +515,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <input class="search-input" type="text" placeholder="Search AWB, customer…" id="fm-search-qc" oninput="fmSearch('qc',this.value)">
                 <select class="filter-select" id="fm-risk-f-qc" onchange="fmFilter('qc')"><option value="">All Risk</option><option>High</option><option>Medium</option><option>Low</option></select>
                 <select class="filter-select" id="fm-hub-f-qc" onchange="fmFilter('qc')"><option value="">All Hubs</option></select>
-                <select class="filter-select" id="fm-act-f-qc" onchange="fmFilter('qc')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
+                <select class="filter-select" id="fm-act-f-qc" onchange="fmFilter('qc')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>DBNU Calling</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
               <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'qc')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action Type</th><th>Action</th></tr></thead><tbody id="fm-table-qc"></tbody></table></div>
@@ -539,7 +539,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <input class="search-input" type="text" placeholder="Search AWB, customer…" id="fm-search-rtod" oninput="fmSearch('rtod',this.value)">
                 <select class="filter-select" id="fm-risk-f-rtod" onchange="fmFilter('rtod')"><option value="">All Risk</option><option>High</option><option>Medium</option><option>Low</option></select>
                 <select class="filter-select" id="fm-hub-f-rtod" onchange="fmFilter('rtod')"><option value="">All Hubs</option></select>
-                <select class="filter-select" id="fm-act-f-rtod" onchange="fmFilter('rtod')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
+                <select class="filter-select" id="fm-act-f-rtod" onchange="fmFilter('rtod')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>DBNU Calling</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
               <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'rtod')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action Type</th><th>Action</th></tr></thead><tbody id="fm-table-rtod"></tbody></table></div>
@@ -563,7 +563,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
                 <input class="search-input" type="text" placeholder="Search AWB, customer…" id="fm-search-dbnu" oninput="fmSearch('dbnu',this.value)">
                 <select class="filter-select" id="fm-risk-f-dbnu" onchange="fmFilter('dbnu')"><option value="">All Risk</option><option>High</option><option>Medium</option><option>Low</option></select>
                 <select class="filter-select" id="fm-hub-f-dbnu" onchange="fmFilter('dbnu')"><option value="">All Hubs</option></select>
-                <select class="filter-select" id="fm-act-f-dbnu" onchange="fmFilter('dbnu')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
+                <select class="filter-select" id="fm-act-f-dbnu" onchange="fmFilter('dbnu')" title="Filter by Action Type"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>DBNU Calling</option><option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option><option>Blacklist Hub</option><option>Watchlist Hub</option></select>
                 <div class="filters-right"><button class="btn btn-primary btn-sm" onclick="openActionModal('')">⚡ Quick Action</button></div>
               </div>
               <div class="table-wrap table-scroll"><table><thead><tr><th><input type="checkbox" onchange="toggleAllFM(this,'dbnu')"></th><th>Hub</th><th>Total AWBs</th><th>AWB Numbers (preview)</th><th>Total Product Value</th><th>Product Categories</th><th>Statuses</th><th>Action Type</th><th>Action</th></tr></thead><tbody id="fm-table-dbnu"></tbody></table></div>
@@ -719,7 +719,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
         <div class="card-header">
           <span class="card-title">Action Log</span>
           <div class="card-actions">
-            <select class="filter-select" id="act-type-filter" onchange="loadActions()"><option value="">All Actions</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>Escalate to Client</option><option>Blacklist Customer</option><option>Blacklist Hub</option><option>Op. Hold</option><option>Mark Genuine</option></select>
+            <select class="filter-select" id="act-type-filter" onchange="loadActions()"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU</option><option>DBNU Calling</option><option>Escalate to Client</option><option>Blacklist Customer</option><option>Blacklist Hub</option><option>Op. Hold</option><option>Mark Genuine</option></select>
             <select class="filter-select" id="act-hub-filter" onchange="loadActions()"><option value="">All Hubs</option></select>
             <input class="search-input" type="text" placeholder="Search AWB, hub…" style="width:160px" oninput="loadActions()" id="act-search">
             <button class="btn btn-primary btn-sm" onclick="showModal('actionModal')">+ New Action</button>
@@ -742,10 +742,11 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
               <button class="btn btn-danger" onclick="openActionModal('Mark RTO')">🚫 Mark RTO</button>
               <button class="btn btn-warning" onclick="openActionModal('FPI Investigation')">🔍 FPI Investigation</button>
               <button class="btn btn-ghost" onclick="openActionModal('SZM Visit')">🏠 SZM Visit</button>
+              <button class="btn btn-danger" onclick="openActionModal('DBNU')">🚫 DBNU</button>
+              <button class="btn btn-danger" onclick="openActionModal('DBNU Calling')">📞 DBNU Calling</button>
               <button class="btn btn-primary" onclick="openActionModal('Escalate to Client')">📤 Escalate to Client</button>
               <button class="btn btn-ghost" onclick="openActionModal('Op. Hold')">⏸ Op. Hold</button>
               <button class="btn btn-success" onclick="openActionModal('Mark Genuine')">✓ Mark Genuine</button>
-              <button class="btn btn-danger" onclick="openActionModal('Blacklist Customer')">⛔ Blacklist Customer</button>
               <button class="btn btn-danger" onclick="openActionModal('Blacklist Hub')">⛔ Blacklist Hub</button>
             </div>
           </div>
@@ -856,6 +857,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
       <div class="form-group"><label class="form-label">Action Type</label>
         <select class="form-control" id="act-type">
           <option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option>
+          <option>DBNU</option><option>DBNU Calling</option>
           <option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option>
           <option>Blacklist Customer</option><option>Blacklist Hub</option>
         </select>
@@ -1214,8 +1216,15 @@ function loadFMData(key) {
         kcard2('Open Cases', mod.open, 'cyan', '#007a6a')
       ].join('');
     } else {
+      // Get product value: first try mod.totalPV from raw rows, 
+      // fallback to Hub_Grouped total (which is always correct from upload time)
       var rawPV = 0;
       try { rawPV = Number(mod.totalPV); if(isNaN(rawPV)||!isFinite(rawPV)) rawPV=0; } catch(e){ rawPV=0; }
+      // If rawPV is still 0, compute from Hub_Grouped (reliable source)
+      if(rawPV===0 && G.dashData && G.dashData.hubGrouped) {
+        var hgRows = G.dashData.hubGrouped.filter(function(r){ return r.upload_type===key; });
+        rawPV = hgRows.reduce(function(s,r){ return s + (parseInt(r.total_product_value||0)||0); }, 0);
+      }
       var pvFmt = rawPV >= 10000000
         ? '₹' + (rawPV/10000000).toFixed(2) + 'Cr'
         : rawPV >= 100000
@@ -1358,10 +1367,19 @@ function renderFMTable(key, rows) {
   }).join('');
 }
 
-function fmSearch(key, val){ clearTimeout(fmSearch._t); fmSearch._t=setTimeout(function(){ loadFMTable(key,1,val); },300); }
+function fmSearch(key, val){
+  clearTimeout(fmSearch._t);
+  fmSearch._t = setTimeout(function(){
+    var actFilter = document.getElementById('fm-act-f-'+key);
+    var actVal = actFilter ? actFilter.value : '';
+    loadFMTable(key, 1, val, actVal);
+  }, 300);
+}
 function fmFilter(key){
   var actFilter = document.getElementById('fm-act-f-'+key);
-  loadFMTable(key, 1, '', actFilter?actFilter.value:'');
+  var actVal = actFilter ? actFilter.value : '';
+  var search = (document.getElementById('fm-search-'+key)||{}).value||'';
+  loadFMTable(key, 1, search, actVal);
 }
 function toggleAllFM(cb, key){ document.querySelectorAll('#fm-table-'+key+' input[type=checkbox]').forEach(function(c){ c.checked=cb.checked; }); }
 
@@ -1512,12 +1530,12 @@ function submitAddRider() {
 // ════════════════════════════════════════
 (function buildUploadCards(){
   var fraudCards = [
-    {key:'bulk_cod', icon:'₹', label:'Bulk COD',     color:'#c82828'},
-    {key:'fraud_eng',icon:'⚡', label:'Fraud Engine',  color:'#008771'},
-    {key:'xray',     icon:'🔬',label:'X Ray Fraud',   color:'#5e4ec2'},
-    {key:'qc',       icon:'✔', label:'QC Fraud',      color:'#007a6a'},
-    {key:'rtod',     icon:'↩', label:'RTOD Fraud',    color:'#8a8600'},
-    {key:'dbnu',     icon:'📋',label:'DBNU',           color:'#235c50'}
+    {key:'bulk_cod', icon:'₹', label:'Bulk COD',     color:'#c82828',  hint:'awb_number, creation_date, hub...'},
+    {key:'fraud_eng',icon:'⚡', label:'Fraud Engine',  color:'#008771',  hint:'awb_number, Risk_Level, hub...'},
+    {key:'xray',     icon:'🔬',label:'X Ray Fraud',   color:'#5e4ec2',  hint:'awb_number, x_ray_date, lm_hub...'},
+    {key:'qc',       icon:'✔', label:'QC Fraud',      color:'#007a6a',  hint:'AWB_Numbers, Category, Hub...'},
+    {key:'rtod',     icon:'↩', label:'RTOD Fraud',    color:'#8a8600',  hint:'AWB_Numbers, Category, Hub...'},
+    {key:'dbnu',     icon:'📋',label:'DBNU',           color:'#235c50',  hint:'AWB_Numbers, Category, Hub...'}
   ];
   var dbCards = [
     {key:'fr_hub',  icon:'🏭', label:'Fraud Hub',      color:'#007a6a'},
@@ -1712,10 +1730,13 @@ function actBtn(btn){
     else{var awbCell=row?row.querySelector('.td-mono'):null;openActionModal(awbCell?awbCell.textContent.trim():'','');}
   }catch(e){openActionModal('','');}
 }
-function openActionModal(awb, type) {
+function openActionModal(awb, type, hub, uploadType) {
   document.getElementById('act-awb').value  = awb||'';
   document.getElementById('act-type').value = type||'Mark RTO';
+  document.getElementById('act-hub').value  = hub||'';
   document.getElementById('act-remarks').value='';
+  // Store context for submission
+  document.getElementById('actionModal').setAttribute('data-upload-type', uploadType||G.activeFM||'');
   checkFpiNote();
   showModal('actionModal');
 }
@@ -1733,7 +1754,11 @@ document.addEventListener('DOMContentLoaded', function(){
 
 function submitAction() {
   var awb  = v('act-awb'), hub=v('act-hub'), type=v('act-type'), pri=v('act-priority'), rem=v('act-remarks');
-  apiPost({action:'addAction', awb_number:awb, hub:hub, action_type:type, priority:pri, remarks:rem, taken_by:G.user?G.user.email:'Dashboard'})
+  var uploadType = (document.getElementById('actionModal')||{}).getAttribute('data-upload-type')||G.activeFM||'';
+  if(!rem){ showToast('Please add remarks before submitting','amber'); return; }
+  if(type==='SZM Visit') showToast('SZM Visit — email will be sent to mohammed.alam@shadowfax.in','blue');
+  if(type==='DBNU'||type==='DBNU Calling') showToast('DBNU — email will be sent to salman.kasheef@shadowfax.in','blue');
+  apiPost({action:'addAction', awb_number:awb, hub:hub, uploadType:uploadType, upload_type:uploadType, action_type:type, priority:pri, remarks:rem, taken_by:G.user?G.user.email:'Dashboard'})
     .then(function(d){
       closeModal('actionModal');
       showToast(d.status==='success'?'Action created: '+d.id:'Error: '+(d.message||''),'blue');
@@ -2096,7 +2121,8 @@ function kcard2(label, val, color, hex) {
 var G_currentHub = null;
 
 function openHubModal(hub, uploadType) {
-  G_currentHub = {hub:hub, uploadType:uploadType};
+  // Always record the exact uploadType so action emails target correct module
+  G_currentHub = {hub:hub, uploadType:uploadType||G.activeFM||''};
   document.getElementById('hubModalTitle').textContent = '🏭 ' + hub;
   document.getElementById('hubModalSub').textContent   = 'Loading hub data…';
   document.getElementById('hubModalKpis').innerHTML    = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-muted)"><i class="fa fa-spinner fa-spin"></i> Loading…</div>';
@@ -2151,13 +2177,18 @@ function openHubModal(hub, uploadType) {
 }
 
 function submitHubAction(){
-  var hub     = G_currentHub&&G_currentHub.hub||'';
-  var awb     = document.getElementById('hubActAwb').value.trim().split(',')[0].trim();
-  var type    = document.getElementById('hubActType').value;
-  var pri     = document.getElementById('hubActPriority').value;
-  var rem     = document.getElementById('hubActRemarks').value.trim();
+  var hub        = G_currentHub&&G_currentHub.hub||'';
+  var uploadType = G_currentHub&&G_currentHub.uploadType||'';  // MUST pass uploadType
+  var awb        = document.getElementById('hubActAwb').value.trim().split(',')[0].trim();
+  var type       = document.getElementById('hubActType').value;
+  var pri        = document.getElementById('hubActPriority').value;
+  var rem        = document.getElementById('hubActRemarks').value.trim();
   if(!hub)  { showToast('No hub selected','amber'); return; }
-  apiPost({action:'addAction', awb_number:awb, hub:hub, action_type:type, priority:pri, remarks:rem, taken_by:G.user?G.user.email:'Dashboard'})
+  if(!rem)  { showToast('Please add remarks before submitting','amber'); return; }
+  // Show SZM/DBNU email notification
+  if(type==='SZM Visit') showToast('Submitting SZM Visit — email will be sent to mohammed.alam@shadowfax.in','blue');
+  if(type==='DBNU'||type==='DBNU Calling') showToast('Submitting DBNU — email will be sent to salman.kasheef@shadowfax.in','blue');
+  apiPost({action:'addAction', awb_number:awb, hub:hub, upload_type:uploadType, uploadType:uploadType, action_type:type, priority:pri, remarks:rem, taken_by:G.user?G.user.email:'Dashboard'})
     .then(function(d){
       if(d.status==='success'){
         showToast('Action saved: '+d.id,'green');
@@ -2475,7 +2506,9 @@ function uniq(arr,field){var s={};arr.forEach(function(r){if(r[field])s[r[field]
           <div class="form-group" style="margin-bottom:0">
             <label class="form-label">Action Type</label>
             <select class="form-control" id="hubActType">
+              <option>Unassigned</option>
               <option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option>
+              <option>DBNU</option><option>DBNU Calling</option>
               <option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option>
               <option>Blacklist Hub</option><option>Watchlist Hub</option>
             </select>
