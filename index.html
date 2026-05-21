@@ -1076,9 +1076,9 @@ function loginSuccess(email, name, role) {
 }
 
 function loadAllDataOnLogin(){
-  showLoader('Loading all data — please wait…');
+  // Silent background load — no blocking loader shown
+  document.getElementById('refreshLabel').textContent = 'Loading…';
   apiGet({action:'getDashboard'}).then(function(d){
-    hideLoader();
     if(!d||d.status==='error'){ showToast('Failed to load: '+(d&&d.message||'Check API URL'),'red'); return; }
     G.dashData = d;
     renderExecutive(d);
@@ -1106,7 +1106,7 @@ function loadAllDataOnLogin(){
         document.getElementById('refreshLabel').textContent='Updated '+new Date().toLocaleTimeString('en-IN',{hour12:true});
       }).catch(function(){}); // silent fail
     }, 120000); // 2 minutes
-  }).catch(function(e){ hideLoader(); showToast('Network error: '+e.message,'red'); });
+  }).catch(function(e){ showToast('Network error: '+e.message,'red'); });
 }
 
 function handleLogout() { location.reload(); }
@@ -1216,8 +1216,7 @@ function loadFMData(key) {
         kcard2('Total Cases', mod.count, 'blue', '#008771'),
         kcard2('High Risk', mod.high, 'red', '#c82828'),
         kcard2('Medium Risk', mod.medium, 'amber', '#8a8600'),
-        kcard2('Low Risk', mod.low, 'green', '#006b57'),
-        kcard2('Open Cases', mod.open, 'cyan', '#007a6a')
+        kcard2('Low Risk', mod.low, 'green', '#006b57')
       ].join('');
     } else {
       // Get product value: first try mod.totalPV from raw rows, 
@@ -1246,7 +1245,6 @@ function loadFMData(key) {
         kpiEl.innerHTML = [
           kcard2('Total Cases', mod.count, 'blue', '#008771'),
           kcard2('Product Value', pvFmt, 'amber', '#8a8600'),
-          kcard2('Open Cases', mod.open, 'red', '#c82828'),
           kcard2('Top Hubs', (mod.topHubs&&mod.topHubs.labels&&mod.topHubs.labels.length)||0, 'green', '#006b57')
         ].join('');
       }
@@ -1750,11 +1748,30 @@ function renderActionTable(rows) {
 }
 
 function markActionComplete(btn){
-  var id=btn.getAttribute('data-act-id');
-  var currentStatus=btn.getAttribute('data-status');
-  if(!id||currentStatus==='Completed'){ showToast('This action is already completed','amber'); return; }
-  btn.disabled=true; btn.textContent='Updating…';
-  updateActionStatus(id,'Completed');
+  var id = btn.getAttribute('data-act-id');
+  if(!id){ showToast('Action ID missing','red'); return; }
+  if(btn.getAttribute('data-done')==='1'){ showToast('Already completed','amber'); return; }
+  btn.disabled = true;
+  btn.textContent = 'Updating…';
+  apiPost({action:'updateAction', action_id:id, status:'Completed'})
+    .then(function(d){
+      if(d && d.status==='success'){
+        btn.textContent = '✓ Completed';
+        btn.setAttribute('data-done','1');
+        btn.style.opacity = '0.6';
+        showToast('Action marked completed','green');
+        loadActions();
+      } else {
+        btn.disabled = false;
+        btn.textContent = '✓ Mark Completed';
+        showToast('Failed: '+(d&&d.message||'unknown error'),'red');
+      }
+    })
+    .catch(function(e){
+      btn.disabled = false;
+      btn.textContent = '✓ Mark Completed';
+      showToast('Network error: '+e.message,'red');
+    });
 }
 function viewHubFromBtn(btn){ var hub=btn.getAttribute('data-hub'); if(hub) openHubModal(hub,''); }
 function toggleActionRow(tr) {
