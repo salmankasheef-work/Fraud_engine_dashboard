@@ -502,10 +502,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
           <!-- qc panel -->
           <div class="fm-panel" id="fm-panel-qc">
             <div class="kpi-grid" id="fm-kpi-qc"></div>
-            <div class="two-col">
-              <div class="card"><div class="card-header"><span class="card-title">Daily Trend</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-trend-qc"></canvas></div></div></div>
-              <div class="card"><div class="card-header"><span class="card-title">Risk Distribution</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-risk-qc"></canvas></div></div></div>
-            </div>
+            <div class="card" style="margin-bottom:14px"><div class="card-header"><span class="card-title">Daily Trend</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-trend-qc"></canvas></div></div></div>
             <div class="two-col">
               <div class="card"><div class="card-header"><span class="card-title">Top Hubs</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-hub-qc"></canvas></div></div></div>
               <div class="card"><div class="card-header"><span class="card-title">Top Fraud Flags</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-flag-qc"></canvas></div></div></div>
@@ -526,10 +523,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
           <!-- rtod panel -->
           <div class="fm-panel" id="fm-panel-rtod">
             <div class="kpi-grid" id="fm-kpi-rtod"></div>
-            <div class="two-col">
-              <div class="card"><div class="card-header"><span class="card-title">Daily Trend</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-trend-rtod"></canvas></div></div></div>
-              <div class="card"><div class="card-header"><span class="card-title">Risk Distribution</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-risk-rtod"></canvas></div></div></div>
-            </div>
+            <div class="card" style="margin-bottom:14px"><div class="card-header"><span class="card-title">Daily Trend</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-trend-rtod"></canvas></div></div></div>
             <div class="two-col">
               <div class="card"><div class="card-header"><span class="card-title">Top Hubs</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-hub-rtod"></canvas></div></div></div>
               <div class="card"><div class="card-header"><span class="card-title">Top Fraud Flags</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-flag-rtod"></canvas></div></div></div>
@@ -550,10 +544,7 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
           <!-- dbnu panel -->
           <div class="fm-panel" id="fm-panel-dbnu">
             <div class="kpi-grid" id="fm-kpi-dbnu"></div>
-            <div class="two-col">
-              <div class="card"><div class="card-header"><span class="card-title">Daily Trend</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-trend-dbnu"></canvas></div></div></div>
-              <div class="card"><div class="card-header"><span class="card-title">Risk Distribution</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-risk-dbnu"></canvas></div></div></div>
-            </div>
+            <div class="card" style="margin-bottom:14px"><div class="card-header"><span class="card-title">Daily Trend</span></div><div class="card-body"><div class="chart-container" style="height:180px"><canvas id="fm-trend-dbnu"></canvas></div></div></div>
             <div class="two-col">
               <div class="card"><div class="card-header"><span class="card-title">Top Hubs</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-hub-dbnu"></canvas></div></div></div>
               <div class="card"><div class="card-header"><span class="card-title">Top Fraud Flags</span></div><div class="card-body"><div class="chart-container" style="height:170px"><canvas id="fm-flag-dbnu"></canvas></div></div></div>
@@ -719,9 +710,9 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
         <div class="card-header">
           <span class="card-title">Action Log</span>
           <div class="card-actions">
-            <select class="filter-select" id="act-type-filter" onchange="loadActions()"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU Calling</option><option>Escalate to Client</option><option>Blacklist Customer</option><option>Blacklist Hub</option><option>Op. Hold</option><option>Mark Genuine</option></select>
-            <select class="filter-select" id="act-hub-filter" onchange="loadActions()"><option value="">All Hubs</option></select>
-            <input class="search-input" type="text" placeholder="Search AWB, hub…" style="width:160px" oninput="loadActions()" id="act-search">
+            <select class="filter-select" id="act-type-filter" onchange="filterAndRenderActions()"><option value="">All Actions</option><option>Unassigned</option><option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option><option>DBNU Calling</option><option>Escalate to Client</option><option>Blacklist Customer</option><option>Blacklist Hub</option><option>Op. Hold</option><option>Mark Genuine</option></select>
+            <select class="filter-select" id="act-hub-filter" onchange="filterAndRenderActions()"><option value="">All Hubs</option></select>
+            <input class="search-input" type="text" placeholder="Search AWB, hub…" style="width:160px" oninput="filterAndRenderActions()" id="act-search">
             <button class="btn btn-primary btn-sm" onclick="showModal('actionModal')">+ New Action</button>
             <button class="btn btn-ghost btn-sm" onclick="downloadActions()">⬇ Export</button>
           </div>
@@ -1075,12 +1066,13 @@ function loginSuccess(email, name, role) {
   document.getElementById('sidebarRole').textContent    = role;
   document.getElementById('sidebarAvatar').textContent  = initials;
   var ov = document.getElementById('loginOverlay');
-  ov.style.transition='opacity .5s'; ov.style.opacity='0';
-  // Auto-load ALL data on login — no manual refresh needed
-  setTimeout(function(){
-    ov.remove();
-    loadAllDataOnLogin();
-  }, 500);
+
+  // START data load immediately in background — while overlay is still fading
+  loadAllDataOnLogin();
+
+  // Fade out and remove the overlay (data loads behind it)
+  ov.style.transition='opacity .6s'; ov.style.opacity='0';
+  setTimeout(function(){ if(ov.parentNode) ov.parentNode.removeChild(ov); }, 650);
 }
 
 function loadAllDataOnLogin(){
@@ -1244,12 +1236,20 @@ function loadFMData(key) {
         : rawPV > 0
         ? '₹' + rawPV.toLocaleString('en-IN')
         : '—';
-      kpiEl.innerHTML = [
-        kcard2('Total Cases', mod.count, 'blue', '#008771'),
-        kcard2('Product Value', pvFmt, 'amber', '#8a8600'),
-        kcard2('Open Cases', mod.open, 'red', '#c82828'),
-        kcard2('Top Hubs', (mod.topHubs&&mod.topHubs.labels&&mod.topHubs.labels.length)||0, 'green', '#006b57')
-      ].join('');
+      if(key==='qc'||key==='rtod'||key==='dbnu'){
+        kpiEl.innerHTML = [
+          kcard2('Total Cases', mod.count, 'blue', '#008771'),
+          kcard2('Product Value', pvFmt, 'amber', '#8a8600'),
+          kcard2('Unique Hubs', (mod.topHubs&&mod.topHubs.labels&&mod.topHubs.labels.length)||0, 'green', '#006b57')
+        ].join('');
+      } else {
+        kpiEl.innerHTML = [
+          kcard2('Total Cases', mod.count, 'blue', '#008771'),
+          kcard2('Product Value', pvFmt, 'amber', '#8a8600'),
+          kcard2('Open Cases', mod.open, 'red', '#c82828'),
+          kcard2('Top Hubs', (mod.topHubs&&mod.topHubs.labels&&mod.topHubs.labels.length)||0, 'green', '#006b57')
+        ].join('');
+      }
     }
   }
 
@@ -1386,16 +1386,24 @@ function renderFMTable(key, rows) {
 function fmSearch(key, val){
   clearTimeout(fmSearch._t);
   fmSearch._t = setTimeout(function(){
-    var actFilter = document.getElementById('fm-act-f-'+key);
-    var actVal = actFilter ? actFilter.value : '';
-    loadFMTable(key, 1, val, actVal);
-  }, 300);
+    fmFilter(key); // uses client-side cache
+  }, 200);
 }
 function fmFilter(key){
-  var actFilter = document.getElementById('fm-act-f-'+key);
-  var actVal = actFilter ? actFilter.value : '';
-  var search = (document.getElementById('fm-search-'+key)||{}).value||'';
-  loadFMTable(key, 1, search, actVal);
+  // Filter from local cache — instant client-side
+  var search  = (document.getElementById('fm-search-'+key)||{}).value||'';
+  var actVal  = ((document.getElementById('fm-act-f-'+key)||{}).value||'');
+  var hubVal  = ((document.getElementById('fm-hub-f-'+key)||{}).value||'');
+  var cached  = G.fmData[key];
+  if(cached && cached.length>0){
+    var filtered = cached;
+    if(actVal)  filtered = filtered.filter(function(r){return (r.action_type||'Unassigned')===actVal;});
+    if(hubVal)  filtered = filtered.filter(function(r){return (r.hub||'').toLowerCase()===hubVal.toLowerCase();});
+    if(search)  filtered = filtered.filter(function(r){return JSON.stringify(r).toLowerCase().includes(search.toLowerCase());});
+    renderFMTable(key, filtered);
+  } else {
+    loadFMTable(key, 1, search, actVal);
+  }
 }
 function toggleAllFM(cb, key){ document.querySelectorAll('#fm-table-'+key+' input[type=checkbox]').forEach(function(c){ c.checked=cb.checked; }); }
 
@@ -1663,22 +1671,44 @@ function addUploadLog(type, fname, result) {
 // ════════════════════════════════════════
 // ACTION CENTER
 // ════════════════════════════════════════
+// Load ALL actions once from backend, store in G.actionData
+// Filtering done client-side for instant response
 function loadActions() {
+  apiGet({action:'getActions'}).then(function(d){
+    if(!d||d.status==='error') return;
+    G.actionData = d.rows || [];
+    // Populate hub filter with ALL unique hubs (do this once on load)
+    var hf = document.getElementById('act-hub-filter');
+    if(hf){
+      var currentVal = hf.value;
+      // Rebuild hub options from all data
+      var hubs={};
+      G.actionData.forEach(function(r){if(r.hub)hubs[r.hub]=1;});
+      while(hf.options.length>1) hf.remove(1);
+      Object.keys(hubs).sort().forEach(function(h){
+        var o=document.createElement('option'); o.value=o.textContent=h; hf.appendChild(o);
+      });
+      if(currentVal) hf.value=currentVal;
+    }
+    // Apply current filters client-side
+    filterAndRenderActions();
+  });
+}
+
+// Client-side filter — instant, no API call
+function filterAndRenderActions(){
   var type   = (document.getElementById('act-type-filter')||{}).value||'';
   var hub    = (document.getElementById('act-hub-filter')||{}).value||'';
-  var search = (document.getElementById('act-search')||{}).value||'';
-  apiGet({action:'getActions', action_type:type, hub:hub, search:search}).then(function(d){
-    if(!d||d.status==='error') return;
-    G.actionData = d.rows;
-    renderActionTable(d.rows);
-    setEl('act-total',   d.total);
-    setEl('act-pending', d.rows.filter(function(r){return r.status==='Open'||r.status==='Pending';}).length);
-    setEl('act-progress',d.rows.filter(function(r){return r.status==='In Progress';}).length);
-    setEl('act-done',    d.rows.filter(function(r){return r.status==='Completed';}).length);
-    // Hub filter
-    var hubs={}, hf=document.getElementById('act-hub-filter');
-    if(hf&&hf.options.length<=1) { d.rows.forEach(function(r){if(r.hub)hubs[r.hub]=1;}); Object.keys(hubs).sort().forEach(function(h){var o=document.createElement('option');o.value=o.textContent=h;hf.appendChild(o);}); }
-  });
+  var search = ((document.getElementById('act-search')||{}).value||'').toLowerCase().trim();
+  var rows   = (G.actionData||[]).slice();
+  if(type)   rows = rows.filter(function(r){ return r.action_type===type; });
+  if(hub)    rows = rows.filter(function(r){ return r.hub===hub; });
+  if(search) rows = rows.filter(function(r){ return JSON.stringify(r).toLowerCase().includes(search); });
+  renderActionTable(rows);
+  setEl('act-total',   rows.length);
+  setEl('act-pending', rows.filter(function(r){return r.status==='Open'||r.status==='Pending';}).length);
+  setEl('act-progress',rows.filter(function(r){return r.status==='In Progress';}).length);
+  setEl('act-done',    rows.filter(function(r){return r.status==='Completed';}).length);
 }
 
 function renderActionTable(rows) {
@@ -1712,14 +1742,20 @@ function renderActionTable(rows) {
       +'</div>'
       +'<div style="margin-top:10px;display:flex;gap:8px">'
       +'<button class="btn btn-success btn-sm" data-act-id="'+esc(r.action_id)+'" onclick="event.stopPropagation();markActionComplete(this)">✓ Mark Completed</button>'
-      +'<button class="btn btn-ghost btn-sm" data-hub="'+esc(r.hub||'')+'" onclick="event.stopPropagation();viewHubFromBtn(this)">🏭 View Hub</button>'
+
       +'</div></td></tr>';
 
     return mainRow + expandRow;
   }).join('');
 }
 
-function markActionComplete(btn){ var id=btn.getAttribute('data-act-id'); if(id) updateActionStatus(id,'Completed'); }
+function markActionComplete(btn){
+  var id=btn.getAttribute('data-act-id');
+  var currentStatus=btn.getAttribute('data-status');
+  if(!id||currentStatus==='Completed'){ showToast('This action is already completed','amber'); return; }
+  btn.disabled=true; btn.textContent='Updating…';
+  updateActionStatus(id,'Completed');
+}
 function viewHubFromBtn(btn){ var hub=btn.getAttribute('data-hub'); if(hub) openHubModal(hub,''); }
 function toggleActionRow(tr) {
   var next = tr.nextElementSibling;
@@ -1733,7 +1769,18 @@ function toggleActionRow(tr) {
 
 function updateActionStatus(actionId, newStatus) {
   apiPost({action:'updateAction', action_id:actionId, status:newStatus})
-    .then(function(d){ if(d.status==='success'){showToast('Action updated','green');loadActions();}else showToast('Failed: '+(d.message||''),'red'); });
+    .then(function(d){
+      if(d.status==='success'){
+        showToast('Action updated','green');
+        // Reload ALL actions then re-apply filters
+        loadActions();
+      }else{
+        showToast('Failed: '+(d.message||'unknown error'),'red');
+        // Re-enable button if it's disabled
+        var btns=document.querySelectorAll('[data-act-id]');
+        btns.forEach(function(b){b.disabled=false;if(b.textContent==='Updating…')b.textContent='✓ Mark Completed';});
+      }
+    });
 }
 
 
@@ -2232,18 +2279,19 @@ function submitHubAction(){
         loadActions();
         // Reload FM table with current filter to reflect updated action_type
         var key = G.activeFM||'fraud_eng';
+        // Wait for sheet write to complete, then reload fresh data
         setTimeout(function(){
-          var actFilter = document.getElementById('fm-act-f-'+key);
-          var actVal    = actFilter ? actFilter.value : '';
-          loadFMTable(key, G.fmPage[key]||1, G.fmSearch[key]||'', actVal);
-          // Silent dashboard refresh to get updated Hub_Grouped
           apiGet({action:'getDashboard'}).then(function(d2){
             if(d2&&d2.status==='success'){
               G.dashData=d2;
               renderExecutive(d2);
+              // Now reload the FM table with current filters — data is fresh
+              var actFilter = document.getElementById('fm-act-f-'+key);
+              var actVal    = actFilter ? actFilter.value : '';
+              loadFMTable(key, G.fmPage[key]||1, G.fmSearch[key]||'', actVal);
             }
           });
-        }, 1000);
+        }, 1500);
       } else {
         showToast('Failed: '+(d.message||'error'),'red');
       }
