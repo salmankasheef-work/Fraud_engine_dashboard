@@ -1221,20 +1221,27 @@ function loadFMData(key) {
     } else {
       // Get product value: first try mod.totalPV from raw rows, 
       // fallback to Hub_Grouped total (which is always correct from upload time)
+      // Robust PV: use mod.totalPV from backend (already computed from both sources)
       var rawPV = 0;
-      try { rawPV = Number(mod.totalPV); if(isNaN(rawPV)||!isFinite(rawPV)) rawPV=0; } catch(e){ rawPV=0; }
-      // If rawPV is still 0, compute from Hub_Grouped (reliable source)
-      if(rawPV===0 && G.dashData && G.dashData.hubGrouped) {
-        var hgRows = G.dashData.hubGrouped.filter(function(r){ return r.upload_type===key; });
-        rawPV = hgRows.reduce(function(s,r){ return s + (parseInt(r.total_product_value||0)||0); }, 0);
+      if (mod && mod.totalPV !== undefined && mod.totalPV !== null) {
+        rawPV = Number(mod.totalPV);
+        if (isNaN(rawPV) || !isFinite(rawPV)) rawPV = 0;
+      }
+      // Additional fallback: compute from hubGrouped directly on frontend
+      if (rawPV === 0 && G.dashData && G.dashData.hubGrouped) {
+        var hgForModule = G.dashData.hubGrouped.filter(function(r){ return r.upload_type === key; });
+        for (var hgi2 = 0; hgi2 < hgForModule.length; hgi2++) {
+          var pvStr = String(hgForModule[hgi2].total_product_value||'0').replace(/[^0-9.]/g,'');
+          rawPV += parseFloat(pvStr)||0;
+        }
       }
       var pvFmt = rawPV >= 10000000
         ? '₹' + (rawPV/10000000).toFixed(2) + 'Cr'
         : rawPV >= 100000
         ? '₹' + (rawPV/100000).toFixed(1) + 'L'
         : rawPV > 0
-        ? '₹' + rawPV.toLocaleString('en-IN')
-        : '—';
+        ? '₹' + Math.round(rawPV).toLocaleString('en-IN')
+        : '₹0';
       if(key==='qc'||key==='rtod'||key==='dbnu'){
         kpiEl.innerHTML = [
           kcard2('Total Cases', mod.count, 'blue', '#008771'),
