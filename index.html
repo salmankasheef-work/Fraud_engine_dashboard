@@ -1245,13 +1245,11 @@ function loadFMData(key) {
       if(key==='qc'||key==='rtod'||key==='dbnu'){
         kpiEl.innerHTML = [
           kcard2('Total Cases', mod.count, 'blue', '#008771'),
-          kcard2('Product Value', pvFmt, 'amber', '#8a8600'),
           kcard2('Unique Hubs', (mod.topHubs&&mod.topHubs.labels&&mod.topHubs.labels.length)||0, 'green', '#006b57')
         ].join('');
       } else {
         kpiEl.innerHTML = [
           kcard2('Total Cases', mod.count, 'blue', '#008771'),
-          kcard2('Product Value', pvFmt, 'amber', '#8a8600'),
           kcard2('Top Hubs', (mod.topHubs&&mod.topHubs.labels&&mod.topHubs.labels.length)||0, 'green', '#006b57')
         ].join('');
       }
@@ -2282,19 +2280,35 @@ function openHubModal(hub, uploadType) {
     .catch(function(e){ document.getElementById('hubModalSub').textContent='Network error: '+e.message; });
 }
 
+function onHubActTypeChange(){
+  var type = (document.getElementById('hubActType')||{}).value||'';
+  var isFpi = type === 'FPI Investigation';
+  var rmRow  = document.getElementById('hubFpiRmRow');
+  var fpiNote= document.getElementById('hubActFpiNote');
+  var szmNote= document.getElementById('hubActFpiNote');
+  if(rmRow)   rmRow.style.display   = isFpi ? 'block' : 'none';
+  if(fpiNote) fpiNote.style.display = isFpi ? 'block' : 'none';
+}
+
 function submitHubAction(){
   var hub        = G_currentHub&&G_currentHub.hub||'';
-  var uploadType = G_currentHub&&G_currentHub.uploadType||'';  // MUST pass uploadType
-  var awb        = document.getElementById('hubActAwb').value.trim().split(',')[0].trim();
+  var uploadType = G_currentHub&&G_currentHub.uploadType||'';
+  var awbs       = document.getElementById('hubActAwb').value.trim();
+  var awb        = awbs.split(',')[0].trim();
   var type       = document.getElementById('hubActType').value;
   var pri        = document.getElementById('hubActPriority').value;
   var rem        = document.getElementById('hubActRemarks').value.trim();
+  var fpiRm      = (document.getElementById('hubFpiRm')||{}).value||'';
   if(!hub)  { showToast('No hub selected','amber'); return; }
   if(!rem)  { showToast('Please add remarks before submitting','amber'); return; }
-  // Show SZM/DBNU email notification
-  if(type==='SZM Visit') showToast('Submitting SZM Visit — email will be sent to mohammed.alam@shadowfax.in','blue');
-  if(type==='DBNU'||type==='DBNU Calling') showToast('Submitting DBNU — email will be sent to salman.kasheef@shadowfax.in','blue');
-  apiPost({action:'addAction', awb_number:awb, hub:hub, upload_type:uploadType, uploadType:uploadType, action_type:type, priority:pri, remarks:rem, taken_by:G.user?G.user.email:'Dashboard'})
+  if(type==='FPI Investigation' && !fpiRm){ showToast('Please select an RM for FPI Investigation','amber'); return; }
+  if(type==='SZM Visit')  showToast('SZM Visit — email will be sent to mohammed.alam@shadowfax.in','blue');
+  if(type==='DBNU Calling') showToast('DBNU — email will be sent to salman.kasheef@shadowfax.in','blue');
+  apiPost({action:'addAction', awb_number:awb, awb_numbers:awbs, hub:hub,
+           upload_type:uploadType, uploadType:uploadType,
+           action_type:type, priority:pri, remarks:rem,
+           fpi_rm:fpiRm,
+           taken_by:G.user?G.user.email:'Dashboard'})
     .then(function(d){
       if(d.status==='success'){
         showToast('Action saved: '+d.id,'green');
@@ -2626,12 +2640,17 @@ function uniq(arr,field){var s={};arr.forEach(function(r){if(r[field])s[r[field]
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
           <div class="form-group" style="margin-bottom:0">
             <label class="form-label">Action Type</label>
-            <select class="form-control" id="hubActType">
+            <select class="form-control" id="hubActType" onchange="onHubActTypeChange()">
               <option>Unassigned</option>
-              <option>Mark RTO</option><option>FPI Investigation</option><option>SZM Visit</option>
+              <option>Mark RTO</option>
+              <option>FPI Investigation</option>
+              <option>SZM Visit</option>
               <option>DBNU Calling</option>
-              <option>Escalate to Client</option><option>Op. Hold</option><option>Mark Genuine</option>
-              <option>Blacklist Hub</option><option>Watchlist Hub</option>
+              <option>Escalate to Client</option>
+              <option>Op. Hold</option>
+              <option>Mark Genuine</option>
+              <option>Blacklist Hub</option>
+              <option>Watchlist Hub</option>
             </select>
           </div>
           <div class="form-group" style="margin-bottom:0">
@@ -2643,6 +2662,18 @@ function uniq(arr,field){var s={};arr.forEach(function(r){if(r[field])s[r[field]
             </select>
           </div>
         </div>
+        <!-- FPI RM Selector — shown only when FPI Investigation is selected -->
+        <div id="hubFpiRmRow" style="display:none;margin-bottom:10px;padding:12px;background:rgba(0,135,113,.05);border:1px solid rgba(0,135,113,.2);border-radius:8px">
+          <div style="font-size:10px;font-weight:700;color:var(--brand-teal);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">🔍 FPI Assignment — Select Regional Manager</div>
+          <select class="form-control" id="hubFpiRm" style="border-color:var(--brand-teal)">
+            <option value="">— Select RM to assign case —</option>
+            <option value="ashish.sheoran@shadowfax.in">Ashish Sheoran (RM - North)</option>
+            <option value="rm2@shadowfax.in">RM 2 (RM - South)</option>
+            <option value="rm3@shadowfax.in">RM 3 (RM - East)</option>
+            <option value="rm4@shadowfax.in">RM 4 (RM - West)</option>
+          </select>
+          <div style="font-size:10px;color:var(--text-muted);margin-top:6px">The case will be created in the CM Portal and assigned to the selected RM. Hub + AWB data will be synced automatically.</div>
+        </div>
         <div class="form-group" style="margin-bottom:10px">
           <label class="form-label">AWB Numbers (auto-filled)</label>
           <input class="form-control" id="hubActAwb" type="text" placeholder="AWB numbers…" style="font-family:var(--font-code);font-size:11px">
@@ -2652,7 +2683,7 @@ function uniq(arr,field){var s={};arr.forEach(function(r){if(r[field])s[r[field]
           <textarea class="form-control" id="hubActRemarks" rows="2" placeholder="Add investigation notes…"></textarea>
         </div>
         <div id="hubActFpiNote" style="display:none;background:rgba(0,135,113,.08);border:1px solid rgba(0,135,113,.3);border-radius:6px;padding:8px 12px;font-size:11px;color:var(--brand-teal);margin-bottom:10px">
-          ⚡ FPI Investigation will be auto-assigned to: <strong>ashish.sheoran@shadowfax.in</strong>
+          ⚡ FPI Investigation → Case will be created in CM Portal and assigned to selected RM
         </div>
         <button class="btn btn-primary" onclick="submitHubAction()" style="width:100%;justify-content:center">Save Action</button>
       </div>
