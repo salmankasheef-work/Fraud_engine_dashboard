@@ -1245,11 +1245,13 @@ function loadFMData(key) {
       if(key==='qc'||key==='rtod'||key==='dbnu'){
         kpiEl.innerHTML = [
           kcard2('Total Cases', mod.count, 'blue', '#008771'),
+          kcard2('Product Value', pvFmt, 'amber', '#8a8600'),
           kcard2('Unique Hubs', (mod.topHubs&&mod.topHubs.labels&&mod.topHubs.labels.length)||0, 'green', '#006b57')
         ].join('');
       } else {
         kpiEl.innerHTML = [
           kcard2('Total Cases', mod.count, 'blue', '#008771'),
+          kcard2('Product Value', pvFmt, 'amber', '#8a8600'),
           kcard2('Top Hubs', (mod.topHubs&&mod.topHubs.labels&&mod.topHubs.labels.length)||0, 'green', '#006b57')
         ].join('');
       }
