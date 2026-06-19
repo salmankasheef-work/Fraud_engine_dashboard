@@ -394,21 +394,52 @@ tbody td{padding:8px 12px;font-size:12px;color:var(--text-primary);white-space:n
 
     <!-- ══ EXECUTIVE SUMMARY ══ -->
     <div class="page active" id="page-executive">
-      <div class="kpi-grid" id="exec-kpi-grid">
-        <div class="kpi-card red"><div class="kpi-icon">🚨</div><div class="kpi-label">High Risk Orders</div><div class="kpi-value" style="color:var(--risk-high)" id="exec-high">—</div></div>
-        <div class="kpi-card amber"><div class="kpi-icon">⚠</div><div class="kpi-label">Medium Risk Orders</div><div class="kpi-value" style="color:var(--risk-med)" id="exec-medium">—</div></div>
-        <div class="kpi-card green"><div class="kpi-icon">✓</div><div class="kpi-label">Low Risk Orders</div><div class="kpi-value" style="color:var(--risk-low)" id="exec-low">—</div></div>
+      <!-- Top-line summary KPIs -->
+      <div class="kpi-grid" id="exec-kpi-grid" style="grid-template-columns:repeat(6,1fr)">
         <div class="kpi-card blue"><div class="kpi-icon">📦</div><div class="kpi-label">Total Cases</div><div class="kpi-value" style="color:var(--brand-teal)" id="exec-total">—</div></div>
+        <div class="kpi-card amber"><div class="kpi-icon">💰</div><div class="kpi-label">Total Product Value</div><div class="kpi-value" style="color:#8a6d00;font-size:22px" id="exec-pv">—</div></div>
+        <div class="kpi-card cyan"><div class="kpi-icon">🏭</div><div class="kpi-label">Hubs Flagged</div><div class="kpi-value" style="color:var(--cyan)" id="exec-hubs">—</div></div>
+        <div class="kpi-card red"><div class="kpi-icon">🚨</div><div class="kpi-label">High Risk</div><div class="kpi-value" style="color:var(--risk-high)" id="exec-high">—</div></div>
         <div class="kpi-card purple"><div class="kpi-icon">⚡</div><div class="kpi-label">Actions Taken</div><div class="kpi-value" style="color:var(--purple)" id="exec-actions">—</div></div>
-        <div class="kpi-card cyan"><div class="kpi-icon">🕵</div><div class="kpi-label">Open Investigations</div><div class="kpi-value" style="color:var(--cyan)" id="exec-open">—</div></div>
+        <div class="kpi-card green"><div class="kpi-icon">🕵</div><div class="kpi-label">Open Investigations</div><div class="kpi-value" style="color:var(--cyan)" id="exec-open">—</div></div>
       </div>
+
+      <!-- Bucket-wise breakdown table — the heart of the exec view -->
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-header">
+          <span class="card-title">📊 Fraud Buckets — Complete Breakdown</span>
+          <span style="font-size:11px;color:var(--text-muted)">All six fraud detection modules at a glance</span>
+        </div>
+        <div class="card-body" style="padding:0">
+          <div class="table-wrap">
+            <table>
+              <thead><tr>
+                <th>Fraud Bucket</th>
+                <th style="text-align:right">Cases</th>
+                <th style="text-align:right">Total AWBs</th>
+                <th style="text-align:right">Product Value</th>
+                <th style="text-align:right">Hubs</th>
+                <th>Top Hub</th>
+                <th>Top Category</th>
+                <th style="text-align:center">Share</th>
+              </tr></thead>
+              <tbody id="exec-bucket-table">
+                <tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-muted)">Loading bucket data…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual charts row -->
       <div class="chart-row">
-        <div class="card"><div class="card-header"><span class="card-title">Weekly Fraud Trend</span></div><div class="card-body"><div class="chart-container" style="height:200px"><canvas id="execTrendChart"></canvas></div></div></div>
-        <div class="card"><div class="card-header"><span class="card-title">Risk Distribution</span></div><div class="card-body"><div style="display:flex;justify-content:center"><div class="chart-container" style="height:170px;width:170px"><canvas id="riskDonutChart"></canvas></div></div><div id="riskDonutLegend" style="margin-top:8px"></div></div></div>
+        <div class="card"><div class="card-header"><span class="card-title">Cases by Bucket</span></div><div class="card-body"><div class="chart-container" style="height:220px"><canvas id="moduleChart"></canvas></div></div></div>
+        <div class="card"><div class="card-header"><span class="card-title">Product Value by Bucket</span></div><div class="card-body"><div class="chart-container" style="height:220px"><canvas id="execPvChart"></canvas></div></div></div>
       </div>
+
       <div class="two-col">
-        <div class="card"><div class="card-header"><span class="card-title">Top Fraud Hubs</span></div><div class="card-body"><div class="chart-container" style="height:190px"><canvas id="execHubChart"></canvas></div></div></div>
-        <div class="card"><div class="card-header"><span class="card-title">Module-wise Cases</span></div><div class="card-body"><div class="chart-container" style="height:190px"><canvas id="moduleChart"></canvas></div></div></div>
+        <div class="card"><div class="card-header"><span class="card-title">Top Fraud Hubs (by Value)</span></div><div class="card-body"><div class="chart-container" style="height:200px"><canvas id="execHubChart"></canvas></div></div></div>
+        <div class="card"><div class="card-header"><span class="card-title">Risk Distribution (Fraud Engine)</span></div><div class="card-body"><div style="display:flex;justify-content:center"><div class="chart-container" style="height:180px;width:180px"><canvas id="riskDonutChart"></canvas></div></div><div id="riskDonutLegend" style="margin-top:8px"></div></div></div>
       </div>
     </div>
 
@@ -1081,15 +1112,23 @@ function loadAllDataOnLogin(){
   apiGet({action:'getDashboard'}).then(function(d){
     if(!d||d.status==='error'){ showToast('Failed to load: '+(d&&d.message||'Check API URL'),'red'); return; }
     G.dashData = d;
+
+    // 1) Render the visible page immediately (Executive Summary is the default page)
     renderExecutive(d);
-    FM_MODULES.forEach(function(m){ if(d.modules[m]) loadFMData(m); });
-    loadAllDb();
-    loadActions();
-    loadFpiData();
     var total = d.executive.totalCases||0;
     document.getElementById('total-fraud-badge').textContent = total>999?'999+':total;
     document.getElementById('pending-action-badge').textContent = d.executive.openActions||0;
     document.getElementById('refreshLabel').textContent = 'Updated '+new Date().toLocaleTimeString('en-IN',{hour12:true});
+
+    // 2) Defer everything else so the UI paints first (fast perceived load)
+    setTimeout(function(){
+      // Only eagerly render the currently active FM module; others render on tab switch
+      if (G.activeFM && d.modules[G.activeFM]) loadFMData(G.activeFM);
+      loadAllDb();
+      loadActions();
+      loadFpiData();
+    }, 50);
+
     showToast('Dashboard ready','green');
     // ── Silent auto-refresh every 2 minutes ──
     if(G._autoRefreshTimer) clearInterval(G._autoRefreshTimer);
@@ -1166,31 +1205,67 @@ function loadDashboard() {
 // EXECUTIVE SUMMARY
 // ════════════════════════════════════════
 function renderExecutive(d) {
-  var ex = d.executive;
-  setEl('exec-high',   ex.highRisk);
-  setEl('exec-medium', ex.mediumRisk);
-  setEl('exec-low',    ex.lowRisk);
-  setEl('exec-total',  ex.totalCases);
-  setEl('exec-actions',ex.actionsTaken);
-  setEl('exec-open',   ex.openActions);
-  setEl('an-total', ex.totalCases); setEl('an-high', ex.highRisk); setEl('an-med', ex.mediumRisk); setEl('an-low', ex.lowRisk); setEl('an-actions', ex.actionsTaken);
+  var ex = d.executive || {};
 
-  // Weekly trend
-  mkLineChart('execTrendChart', ex.weeklyTrend.labels, ex.weeklyTrend.data, 'Cases', '#008771');
-  // Risk donut
-  mkDoughnut('riskDonutChart', ex.riskDist.labels, ex.riskDist.data, ['#c82828','#8a8600','#006b57']);
-  renderLegend('riskDonutLegend', ex.riskDist.labels, ex.riskDist.data, ['#c82828','#8a8600','#006b57']);
-  // Top hubs bar
-  mkBarH('execHubChart', ex.topHubs.labels, ex.topHubs.data, '#008771');
+  // ── Top-line KPI tiles ──
+  setEl('exec-total',   ex.totalCases || 0);
+  document.getElementById('exec-pv').textContent    = fmtINR(ex.totalProductValue || 0);
+  document.getElementById('exec-hubs').textContent  = fmtNum(ex.totalHubs || 0);
+  setEl('exec-high',    ex.highRisk || 0);
+  setEl('exec-actions', ex.actionsTaken || 0);
+  setEl('exec-open',    ex.openActions || 0);
 
-  // Module chart
-  var mods = d.modules;
-  var mLabels = FM_MODULES.map(function(k){ return FM_LABELS[k]; });
-  var mData   = FM_MODULES.map(function(k){ return mods[k]?mods[k].count:0; });
-  var mColors = FM_MODULES.map(function(k){ return FM_COLORS[k]; });
-  mkBar('moduleChart', mLabels, mData, mColors, 'Cases');
-  mkBar('an-module-chart', mLabels, mData, mColors, 'Cases');
-  mkBarH('an-hub-chart', ex.topHubs.labels, ex.topHubs.data, '#008771');
+  // ── Bucket breakdown table — the heart of the exec view ──
+  var ms = ex.moduleSummary || [];
+  var totalCasesAll = ms.reduce(function(s,m){ return s + (m.cases||0); }, 0) || 1;
+  var tbody = document.getElementById('exec-bucket-table');
+  if (tbody) {
+    if (!ms.length) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-muted)">No data yet — upload fraud data to populate buckets.</td></tr>';
+    } else {
+      tbody.innerHTML = ms.map(function(m){
+        var share = Math.round((m.cases||0) / totalCasesAll * 100);
+        var barColor = FM_COLORS[m.key] || '#008771';
+        return '<tr>'
+          + '<td><span style="display:inline-flex;align-items:center;gap:8px;font-weight:600">'
+          +   '<span style="width:10px;height:10px;border-radius:3px;background:'+barColor+';display:inline-block"></span>'
+          +   esc(m.label) + '</span></td>'
+          + '<td style="text-align:right;font-family:var(--font-code);font-weight:700">'+fmtNum(m.cases)+'</td>'
+          + '<td style="text-align:right;font-family:var(--font-code)">'+fmtNum(m.awbs)+'</td>'
+          + '<td style="text-align:right;font-family:var(--font-code);font-weight:700;color:#8a6d00">'+fmtINR(m.pv)+'</td>'
+          + '<td style="text-align:right;font-family:var(--font-code)">'+fmtNum(m.hubs)+'</td>'
+          + '<td style="font-size:12px">'+esc(m.topHub||'-')+'</td>'
+          + '<td style="font-size:12px">'+esc(m.topCategory||'-')+'</td>'
+          + '<td style="text-align:center;min-width:90px">'
+          +   '<div style="display:flex;align-items:center;gap:6px">'
+          +     '<div style="flex:1;height:7px;background:var(--border-light);border-radius:4px;overflow:hidden">'
+          +       '<div style="height:100%;width:'+share+'%;background:'+barColor+';border-radius:4px"></div>'
+          +     '</div>'
+          +     '<span style="font-size:11px;font-family:var(--font-code);color:var(--text-muted);min-width:30px">'+share+'%</span>'
+          +   '</div>'
+          + '</td>'
+          + '</tr>';
+      }).join('');
+    }
+  }
+
+  // ── Charts ──
+  var mLabels = ms.map(function(m){ return m.label; });
+  var mCases  = ms.map(function(m){ return m.cases || 0; });
+  var mPV     = ms.map(function(m){ return m.pv || 0; });
+  var mColors = ms.map(function(m){ return FM_COLORS[m.key] || '#008771'; });
+
+  // Cases by bucket
+  mkBar('moduleChart', mLabels, mCases, mColors, 'Cases');
+  // Product Value by bucket
+  mkBar('execPvChart', mLabels, mPV, mColors, 'Product Value');
+  // Top fraud hubs by value
+  var th = ex.topHubs || {labels:[],data:[]};
+  mkBarH('execHubChart', th.labels || [], th.data || [], '#0e6ac7');
+  // Risk donut (Fraud Engine)
+  var rd = ex.riskDist || {labels:['High','Medium','Low'],data:[0,0,0]};
+  mkDoughnut('riskDonutChart', rd.labels, rd.data, ['#c82828','#8a8600','#006b57']);
+  renderLegend('riskDonutLegend', rd.labels, rd.data, ['#c82828','#8a8600','#006b57']);
 }
 
 
@@ -1208,89 +1283,97 @@ function loadFMData(key) {
   var mod = G.dashData.modules[key];
   if (!mod) return;
 
-  // KPIs — Fraud Engine shows risk breakdown; others show count + product value
+  // Compute Product Value robustly: backend value first, Hub_Grouped fallback.
+  var pv = computeModulePV(key, mod);
+  var pvFmt = fmtINR(pv);
+
   var kpiEl = document.getElementById('fm-kpi-'+key);
   if (kpiEl) {
     if (key === 'fraud_eng') {
       kpiEl.innerHTML = [
-        kcard2('Total Cases', mod.count, 'blue', '#008771'),
-        kcard2('High Risk', mod.high, 'red', '#c82828'),
-        kcard2('Medium Risk', mod.medium, 'amber', '#8a8600'),
-        kcard2('Low Risk', mod.low, 'green', '#006b57')
+        kcard2('Total Cases',   fmtNum(mod.count),  'blue',  '#008771'),
+        kcard2('Product Value', pvFmt,              'amber', '#8a6d00'),
+        kcard2('High Risk',     fmtNum(mod.high),   'red',   '#c82828'),
+        kcard2('Medium Risk',   fmtNum(mod.medium), 'amber', '#8a8600'),
+        kcard2('Low Risk',      fmtNum(mod.low),    'green', '#006b57')
       ].join('');
     } else {
-      // Get product value: first try mod.totalPV from raw rows, 
-      // fallback to Hub_Grouped total (which is always correct from upload time)
-      // Robust PV: use mod.totalPV from backend (already computed from both sources)
-      var rawPV = 0;
-      if (mod && mod.totalPV !== undefined && mod.totalPV !== null) {
-        rawPV = Number(mod.totalPV);
-        if (isNaN(rawPV) || !isFinite(rawPV)) rawPV = 0;
-      }
-      // Additional fallback: compute from hubGrouped directly on frontend
-      if (rawPV === 0 && G.dashData && G.dashData.hubGrouped) {
-        var hgForModule = G.dashData.hubGrouped.filter(function(r){ return r.upload_type === key; });
-        for (var hgi2 = 0; hgi2 < hgForModule.length; hgi2++) {
-          var pvStr = String(hgForModule[hgi2].total_product_value||'0').replace(/[^0-9.]/g,'');
-          rawPV += parseFloat(pvStr)||0;
-        }
-      }
-      var pvFmt = rawPV >= 10000000
-        ? '₹' + (rawPV/10000000).toFixed(2) + 'Cr'
-        : rawPV >= 100000
-        ? '₹' + (rawPV/100000).toFixed(1) + 'L'
-        : rawPV > 0
-        ? '₹' + Math.round(rawPV).toLocaleString('en-IN')
-        : '₹0';
-      if(key==='qc'||key==='rtod'||key==='dbnu'){
-        kpiEl.innerHTML = [
-          kcard2('Total Cases', mod.count, 'blue', '#008771'),
-          kcard2('Product Value', pvFmt, 'amber', '#8a8600'),
-          kcard2('Unique Hubs', (mod.topHubs&&mod.topHubs.labels&&mod.topHubs.labels.length)||0, 'green', '#006b57')
-        ].join('');
-      } else {
-        kpiEl.innerHTML = [
-          kcard2('Total Cases', mod.count, 'blue', '#008771'),
-          kcard2('Product Value', pvFmt, 'amber', '#8a8600'),
-          kcard2('Top Hubs', (mod.topHubs&&mod.topHubs.labels&&mod.topHubs.labels.length)||0, 'green', '#006b57')
-        ].join('');
-      }
+      var awbCount = Number(mod.totalAWBs) || mod.count || 0;
+      var hubCount = Number(mod.hubCount) || (mod.topHubs && mod.topHubs.labels && mod.topHubs.labels.length) || 0;
+      kpiEl.innerHTML = [
+        kcard2('Total Cases',   fmtNum(mod.count), 'blue',  '#008771'),
+        kcard2('Product Value', pvFmt,             'amber', '#8a6d00'),
+        kcard2('Total AWBs',    fmtNum(awbCount),  'cyan',  '#007a6a'),
+        kcard2('Unique Hubs',   fmtNum(hubCount),  'green', '#006b57')
+      ].join('');
     }
   }
 
-  // Charts
-  // Use hub-grouped data for hub chart (more accurate as it comes from aggregated store)
-  var hubGroupedForKey = (G.dashData&&G.dashData.hubGrouped||[]).filter(function(r){return r.upload_type===key;});
+  // Hub chart from Hub_Grouped
+  var hubGroupedForKey = (G.dashData && G.dashData.hubGrouped || []).filter(function(r){ return r.upload_type===key; });
   var hubLabels=[], hubVals=[];
-  hubGroupedForKey.sort(function(a,b){return parseInt(b.total_product_value||0)-parseInt(a.total_product_value||0);}).slice(0,8).forEach(function(r){
-    hubLabels.push(r.hub);
-    hubVals.push(parseInt(r.total_product_value||0)||parseInt(r.total_awbs||0));
-  });
-  // Trend from raw daily data
-  var trendLabels = mod.dailyTrend&&mod.dailyTrend.labels||[];
-  var trendData   = mod.dailyTrend&&mod.dailyTrend.data||[];
-  // If all zeros, show count per hub instead
-  var hasData = trendData.some(function(v){return v>0;});
-  mkLineChart('fm-trend-'+key, trendLabels, trendData, 'Cases', FM_COLORS[key]);
+  hubGroupedForKey.slice().sort(function(a,b){ return parsePVFront(b.total_product_value)-parsePVFront(a.total_product_value); })
+    .slice(0,8).forEach(function(r){
+      hubLabels.push(r.hub);
+      hubVals.push(Math.round(parsePVFront(r.total_product_value)) || (parseInt(r.total_awbs,10)||0));
+    });
+
+  // Trend: lazy-load from backend (kept out of the heavy dashboard payload for speed)
+  if (mod.dailyTrend && mod.dailyTrend.data && mod.dailyTrend.data.length) {
+    mkLineChart('fm-trend-'+key, mod.dailyTrend.labels, mod.dailyTrend.data, 'Cases', FM_COLORS[key]);
+  } else if (!G._trendLoaded || !G._trendLoaded[key]) {
+    G._trendLoaded = G._trendLoaded || {};
+    apiGet({action:'getTrend', module:key}).then(function(t){
+      if (t && t.status==='success' && t.trend) {
+        mod.dailyTrend = t.trend;
+        G._trendLoaded[key] = true;
+        mkLineChart('fm-trend-'+key, t.trend.labels, t.trend.data, 'Cases', FM_COLORS[key]);
+      }
+    }).catch(function(){});
+  }
+
+  // Risk / category distribution chart
   if (key === 'fraud_eng') {
     mkDoughnut('fm-risk-'+key, ['High','Medium','Low'], [mod.high||0, mod.medium||0, mod.low||0], ['#c82828','#8a8600','#006b57']);
   } else {
-    // For QC/RTOD/DBNU: show Category/Loss_Type distribution (statusDist from backend)
-    var sdLabels = (mod.statusDist&&mod.statusDist.labels&&mod.statusDist.labels.length) ? mod.statusDist.labels : [];
-    var sdData   = (mod.statusDist&&mod.statusDist.data)   ? mod.statusDist.data   : [];
-    if(sdLabels.length > 0) {
+    var sdLabels = (mod.statusDist && mod.statusDist.labels && mod.statusDist.labels.length) ? mod.statusDist.labels : [];
+    var sdData   = (mod.statusDist && mod.statusDist.data) ? mod.statusDist.data : [];
+    if (sdLabels.length > 0) {
       mkBarH('fm-risk-'+key, sdLabels, sdData, '#5e4ec2');
-    } else if(mod.fraudFlags&&mod.fraudFlags.labels&&mod.fraudFlags.labels.length) {
+    } else if (mod.fraudFlags && mod.fraudFlags.labels && mod.fraudFlags.labels.length) {
       mkBarH('fm-risk-'+key, mod.fraudFlags.labels, mod.fraudFlags.data, '#5e4ec2');
     }
   }
-  if(hubLabels.length) mkBarH('fm-hub-'+key, hubLabels, hubVals, FM_COLORS[key]);
-  else if(mod.topHubs&&mod.topHubs.labels&&mod.topHubs.labels.length) mkBarH('fm-hub-'+key, mod.topHubs.labels, mod.topHubs.data, FM_COLORS[key]);
-  if(mod.fraudFlags&&mod.fraudFlags.labels&&mod.fraudFlags.labels.length) mkBarH('fm-flag-'+key, mod.fraudFlags.labels, mod.fraudFlags.data, '#5e4ec2');
 
-  // Table
+  if (hubLabels.length) mkBarH('fm-hub-'+key, hubLabels, hubVals, FM_COLORS[key]);
+  else if (mod.topHubs && mod.topHubs.labels && mod.topHubs.labels.length) mkBarH('fm-hub-'+key, mod.topHubs.labels, mod.topHubs.data, FM_COLORS[key]);
+  if (mod.fraudFlags && mod.fraudFlags.labels && mod.fraudFlags.labels.length) mkBarH('fm-flag-'+key, mod.fraudFlags.labels, mod.fraudFlags.data, '#5e4ec2');
+
   loadFMTable(key, 1, '');
 }
+
+// Parse a product-value string/number on the frontend (mirror of backend parsePV)
+function parsePVFront(val) {
+  if (val === null || val === undefined || val === '') return 0;
+  if (typeof val === 'number') return (isNaN(val)||!isFinite(val)||val<0) ? 0 : val;
+  var s = String(val).replace(/[^0-9.]/g, '');
+  if (!s) return 0;
+  var n = parseFloat(s);
+  return (isNaN(n)||!isFinite(n)||n<0) ? 0 : n;
+}
+
+// Robust per-module Product Value: trust backend integer, else sum Hub_Grouped.
+function computeModulePV(key, mod) {
+  var pv = Number(mod && mod.totalPV);
+  if (!isNaN(pv) && isFinite(pv) && pv > 0) return Math.round(pv);
+  pv = 0;
+  if (G.dashData && G.dashData.hubGrouped) {
+    G.dashData.hubGrouped.filter(function(r){ return r.upload_type === key; })
+      .forEach(function(r){ pv += parsePVFront(r.total_product_value); });
+  }
+  return Math.round(pv);
+}
+
 
 function loadFMTable(key, page, search, actionType) {
   G.fmPage[key]   = page||1;
@@ -2031,7 +2114,18 @@ function downloadFpiData() {
 // ════════════════════════════════════════
 function renderAnalytics() {
   if(!G.dashData) return;
-  // Charts already built in renderExecutive
+  var d = G.dashData, ex = d.executive || {}, ms = ex.moduleSummary || [];
+  setEl('an-total',   ex.totalCases || 0);
+  setEl('an-high',    ex.highRisk   || 0);
+  setEl('an-med',     ex.mediumRisk || 0);
+  setEl('an-low',     ex.lowRisk    || 0);
+  setEl('an-actions', ex.actionsTaken || 0);
+  var mLabels = ms.map(function(m){ return m.label; });
+  var mCases  = ms.map(function(m){ return m.cases || 0; });
+  var mColors = ms.map(function(m){ return FM_COLORS[m.key] || '#008771'; });
+  mkBar('an-module-chart', mLabels, mCases, mColors, 'Cases');
+  var th = ex.topHubs || {labels:[],data:[]};
+  mkBarH('an-hub-chart', th.labels || [], th.data || [], '#0e6ac7');
 }
 
 // ════════════════════════════════════════
@@ -2210,7 +2304,33 @@ function buildReminderEmailPreview(){
 }
 
 function kcard2(label, val, color, hex) {
-  return '<div class="kpi-card '+color+'"><div class="kpi-label">'+label+'</div><div class="kpi-value" style="color:'+hex+'">'+Number(val||0).toLocaleString('en-IN')+'</div></div>';
+  // If val is already a formatted string (e.g. '₹4.2L'), show as-is.
+  // If it's a number, format with thousands separators.
+  var display;
+  if (typeof val === 'string') {
+    display = val;
+  } else {
+    var n = Number(val);
+    display = (isNaN(n) || !isFinite(n)) ? '0' : n.toLocaleString('en-IN');
+  }
+  return '<div class="kpi-card '+color+'"><div class="kpi-label">'+label+'</div>'
+       + '<div class="kpi-value" style="color:'+hex+'">'+display+'</div></div>';
+}
+
+// Format a number as Indian currency shorthand: ₹4.2Cr / ₹3.5L / ₹12,500 / —
+function fmtINR(num) {
+  var n = Number(num);
+  if (isNaN(n) || !isFinite(n) || n <= 0) return '—';
+  n = Math.round(n);
+  if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + 'Cr';
+  if (n >= 100000)   return '₹' + (n/100000).toFixed(2) + 'L';
+  return '₹' + n.toLocaleString('en-IN');
+}
+// Format plain count: 1,23,456
+function fmtNum(num) {
+  var n = Number(num);
+  if (isNaN(n) || !isFinite(n)) return '0';
+  return Math.round(n).toLocaleString('en-IN');
 }
 
 // ════════════════════════════════════════
